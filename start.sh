@@ -1,0 +1,1 @@
+nohup php stock.php Bian/runLastData  > /dev/null 2>&1 &

@@ -1,0 +1,39 @@
+<style>
+select.input-sm{    
+    height: auto !important;
+    line-height: auto !important;}
+</style>
+<div class="panel panel-default panel-intro">
+
+    <div class="panel-heading">
+        {:build_heading(null, false)}
+        <ul class="nav nav-tabs">
+           
+            <li class="{if condition="$active eq '1'"}active{/if}"><a href="{:url('user/index')}">用户管理</a></li>
+           
+        </ul>
+    </div>
+    <div class="panel-body">
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade active in" id="one">
+                <div class="widget-body no-padding">
+                    <div id="toolbar" class="toolbar">
+                        <a href="javascript:;" class="btn btn-primary btn-refresh" title="{:__('Refresh')}" ><i class="fa fa-refresh"></i> </a>
+                       <a href="javascript:;" class="btn btn-success btn-add {:$auth->check('user/add')?'':'hide'}" title="{:__('Add')}" ><i class="fa fa-plus"></i> {:__('Add')}</a>
+                    </div>
+                    <table id="table" class="table table-striped table-bordered table-hover table-nowrap"
+                    	   data-operate-check="{:$auth->check('user/check')}"
+                    	   data-operate-detail="{:$auth->check('user/detail')}"
+                    	   data-operate-score="{:$auth->check('user/score')}" 
+                    	   data-operate-chat="{:$auth->check('user/chat')}" 
+                    	   data-operate-report="{:$auth->check('report/mark/index')}" 
+                           data-operate-edit="{:$auth->check('user/edit')}" 
+                         
+                           width="100%">
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

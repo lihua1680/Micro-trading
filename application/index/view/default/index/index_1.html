@@ -1,0 +1,413 @@
+{extend name="public/layout" /}
+
+{block name="addCss"}
+<script type='text/javascript'>
+//     (function(a, b, c, d, e, j, s) {
+//         a[d] = a[d] || function() {
+//             (a[d].a = a[d].a || []).push(arguments)
+//         };
+//         j = b.createElement(c),
+//             s = b.getElementsByTagName(c)[0];
+//         j.async = true;
+//         j.charset = 'UTF-8';
+//         j.src = 'https://static.meiqia.com/widget/loader.js';
+//         s.parentNode.insertBefore(j, s);
+//     })(window, document, 'script', '_MEIQIA');
+//     _MEIQIA('entId', 'cc4093182a10b787f51bee44b1fdd1de');
+//     _MEIQIA('subSource', 'sub_source_1');
+//     _MEIQIA('metadata', {name:"{$cuser['real_name']}"});
+    
+    
+</script>
+<style>
+
+.news-item{height:12px}
+#app{
+	display: none;
+}
+.article-list{
+	padding: 10px;
+	margin-top: 10px;
+	margin-bottom: 50px;
+}
+.article-item{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 10px;
+	background-color: #fff;
+	margin-top: 10px;
+}
+.article-right{
+	padding-left: 10px;
+}
+.article-title{
+	font-weight: bold;
+	font-size: 14px;
+	overflow: hidden;
+	display: -webkit-box;
+	text-overflow: ellipsis;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+}
+.article-time{
+	font-size: 14px;
+	color: #ddd;
+	margin-top: 10px;
+}
+.article-img>img{
+	border-radius: 8px;
+	width: 100px;
+}
+.home-menu{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-top: 20px;
+}
+.menu-item{
+	flex: 1;
+	width: 25%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.menu-image{
+	width: 40px;
+	height: 40px;
+}
+.menu-name{
+	margin-top: 5px;
+	color: #333;
+	font-size: 14px;
+}
+#certify{
+	padding-top: 0px!important;
+}
+</style>
+{/block}
+{block name="content"}
+	<!-- 头部 -->
+<!--		<div class="header bgColor">-->
+<!--			-->
+<!--			<div class="top-logo">-->
+<!--			    <img src="{:config('site.web_icon')}">-->
+<!--			</div>-->
+<!--		</div>-->
+<!--		<div class="header-space"></div>-->
+		
+		<div id="certify">
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					    {foreach $banner as $key=>$vo} 
+						<div class="banlide swiper-slide"><a href="javascript:;"><img src="{$vo.image}"/></a></div>
+						{/foreach}
+				</div>
+			</div>
+			<div class="swiper-pagination"></div>
+		</div>
+		
+		<div class="news-two">
+		    <div class="new-two-box">
+		    <div class="new-two-left">
+		    <img src="data:image/png;base64,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">
+		    </div>
+		    <div class="new-two-right">
+		        <div class="new-two-list">
+		                <div class="new-two-list-box" id="news_list" style="height:auto">
+		               		{foreach $notice as $key=>$vo} 
+		               			<li class='news-item'><a href="{:url('index/page_detail', array('sid'=>$vo['id']))}">{$vo.title}</a></li>
+		               		{/foreach}
+		           		</div>
+		            
+		        </div>
+		    </div>
+		    </div>
+		</div>
+		<div class="trade swiper-container">
+			<ul class="swiper-wrapper trade_list" id="tradeBox">
+			      
+			</ul>
+			
+		</div>
+	
+		<div class="fiatde" style="margin-bottom: 0">
+			<div class="deals hide">
+				<a href="fiatrad.html" class="flex between">
+					<div class="fl-left">
+						<b>资产交易</b> <span>多种资产交易，多种支付方式</span>
+					</div>
+				</a>
+			</div>
+		</div>
+		<div class="home-menu">
+			<a class="menu-item" href="{:url('index/company')}">
+				<img class="menu-image" src="/assets/img/qiye.png">
+				<div class="menu-name">公司简介</div>
+			</a>
+			<a class="menu-item" href="{$kefu}">
+				<img class="menu-image" src="/assets/img/chongzhi.png">
+				<div class="menu-name">快速充值</div>
+			</a>
+			<a class="menu-item" href="{:url('index/user/withdraw')}">
+				<img class="menu-image" src="/assets/img/tixian.png">
+				<div class="menu-name">快速提现</div>
+			</a>
+			<a class="menu-item" href="{$kefu}">
+				<img class="menu-image" src="/assets/img/kefu.png">
+				<div class="menu-name">客服</div>
+			</a>
+		</div>
+		<div class="article-list" id="app">
+			<div class="article-item" @click="toArt(item)" v-for="item in articleList" :key="item.id">
+				<div class="article-img">
+					<img :src="item.image">
+				</div>
+				<div class="article-right ">
+					<div class="article-title" style="width: 100%">{{item.title}}</div>
+					<!--<div class="article-title" style="width: 100%">{{item.summary}}</div>-->
+					<div class="article-time">{{item.pubtime}}</div>
+
+				</div>
+			</div>
+		</div>
+<!--		<div class="highlists mt10">-->
+<!--			<ul class="nav nav-tabs" >-->
+<!--				<li   class="nav-active" data-type="0"><a-->
+<!--					style="font-weight: bold;" data-localize="index.increase">涨幅榜</a></li>-->
+<!--					<li data-type="1"><a href="#turnover"-->
+<!--					style="font-weight: bold;" data-localize="index.turnover">成交額榜</a></li>-->
+<!--			</ul>-->
+<!--			<div class="tab-content">-->
+<!--				<div role="tabpanel" class="tab-pane fade in active">-->
+<!--					<ul class="flex ft12 between performer-classify performer-classifyone">-->
+<!--						<li data-localize="index.name">名称</li>-->
+<!--						<li class="tc" data-localize="index.lastPrice{$site.trade_type}">最新价()</li>-->
+<!--						<li class="tr" data-localize="index.change">涨跌幅</li>-->
+<!--					</ul>-->
+<!--					<ul class="flex ft12 between performer-classify performer-classifytwo" style="display:none">-->
+<!--						<li data-localize="index.name">名称</li>-->
+<!--						<li class="tc" data-localize="index.lastPrice{$site.trade_type}">最新价</li>-->
+<!--						<li class="tr" data-localize="index.24hturnover">24H成交额(10K)</li>-->
+<!--					</ul>-->
+<!--					<ul id="performer">-->
+
+<!--					</ul>-->
+<!--					<ul id="turnover" style="display:none">-->
+
+<!--					</ul>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--		</div>-->
+{/block}
+
+{block name="addJs"}
+    <script type="text/javascript">
+        Index.init();
+        init();
+        function init() {
+            setTimeout(function(){
+              runbanner();  
+            },)
+
+            $("#news_list").bootstrapNews({
+                newsPerPage: 1,
+                autoplay: true,
+                pauseOnHover: true,
+                navigation: false,
+                direction: 'down',
+                newsTickerInterval: 2500,
+                onToDo: function () {}
+            });
+            
+        }
+        
+        
+        
+
+        function compare(prop) {
+            return function (obj1, obj2) {
+                var val1 = obj1[prop] - 0;
+                var val2 = obj2[prop] - 0;
+                if (val1 < val2) {
+                    return 1;
+                } else if (val1 > val2) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        }
+        
+        
+        $(function () {
+
+        	$(".nav-tabs li").click(function(){
+        	    $(".nav-tabs li").removeClass('nav-active');
+        	    $(this).addClass('nav-active');
+        	    if($(this).attr('data-type')==1){
+        	        $("#performer").hide();
+        	        $("#turnover").show();
+        	        $(".performer-classifytwo").show();
+        	        $(".performer-classifyone").hide();
+        	    }else{
+        	        $("#performer").show();
+        	        $("#turnover").hide();
+        	        $(".performer-classifyone").show();
+        	        $(".performer-classifytwo").hide();
+        	    }
+        	})
+        	
+
+            
+            
+            
+            
+        })
+
+        
+        $('.langs').click(function () {
+            $('.lang-list').toggle();
+        })
+        
+        $('.lang-list li').click(function () {
+            $('.langs .logos').attr('src', $(this).find('.logos').attr('src'));
+            $('.langs span').text($(this).find('span').text());
+            $('.lang-list').hide();
+            var texts = $(this).attr('data-type');
+            //setLocal('language', texts);
+            location.reload();
+            //setLang(texts)
+        })
+        
+        function runbanner(){
+             new Swiper('#certify .swiper-container', {
+            	watchSlidesProgress: true,
+            	//slidesPerView: 'auto',
+            	//centeredSlides: true,
+            	loop: true,
+            	loopedSlides: 5,
+            	autoplay: true,
+            	navigation: {
+            		nextEl: '.swiper-button-next',
+            		prevEl: '.swiper-button-prev',
+            	},
+            	pagination: {
+            		el: '.swiper-pagination',
+            		//clickable :true,
+            	},
+            	on: {
+            		progress: function(progress) {
+            			for (i = 0; i < this.slides.length; i++) {
+            				var slide = this.slides.eq(i);
+            				var slideProgress = this.slides[i].progress;
+            				modify = 1;
+            				if (Math.abs(slideProgress) > 1) {
+            					modify = (Math.abs(slideProgress) - 1) * 0.3 + 1;
+            				}
+            				translate = slideProgress * modify * 260 + 'px';
+            				scale = 1 - Math.abs(slideProgress) / 5;
+            				zIndex = 999 - Math.abs(Math.round(10 * slideProgress));
+            				slide.transform('translateX(' + translate + ') scale(' + scale + ')');
+            				slide.css('zIndex', zIndex);
+            				slide.css('opacity', 1);
+            				if (Math.abs(slideProgress) > 3) {
+            					slide.css('opacity', 0);
+            				}
+            			}
+            		},
+            		setTransition: function(transition) {
+            			for (var i = 0; i < this.slides.length; i++) {
+            				var slide = this.slides.eq(i)
+            				slide.transition(transition);
+            			}
+            
+            		}
+            	}
+            
+            })
+        }
+        
+        
+        var isopen = {if condition="in_array('alert_notice', $site['chat_setting'])"} true {else} false {/if};
+            
+        if (isopen) {
+        	layer.open({
+                content: '{$site.alert_notice}'
+                ,btn: '我知道了'
+            });
+        }
+        
+        
+    </script>
+    <script type="text/javascript" src="__MB__/js/vue.js"></script>
+
+<script>
+	$(function (){
+		$(this).scroll(function () {
+			if ($(window).scrollTop() + $(window).height() >=$(document).height()-50) {
+				app.getData()
+			}
+		})
+	})
+	var app = new Vue({
+		el: '#app',
+		data: {
+			message: 'Hello Vue!',
+			width:window.innerWidth,
+			page:1,
+			hasMore:true,
+			articleList:[],
+			loading:false
+		},
+		created(){
+			this.getData()
+			$("#app").show()
+		},
+		methods:{
+			getData(){
+				let data={page:this.page}
+				let self=this
+				if(!self.hasMore)return
+				if(self.loading) return
+				self.loading=true
+				$.ajax({
+					url:"{:url('index/getArticleList')}",
+					method:"GET",
+					data:data,
+					success:function (res) {
+						console.log(res)
+						self.loading=false
+						self.articleList=self.articleList.concat(res.data)
+						if(res.current_page==res.last_page){
+							self.hasMore=false
+						}else{
+							self.page++
+						}
+					}
+				})
+			},
+			toArt(itme){
+				location.href="{:url('index/article')}?id="+itme.id
+			},
+			formatDate(value) { // 时间戳转换日期格式方法
+				if (value == null) {
+					return ''
+				} else {
+					const date = new Date()
+					date.setTime(value)
+					const y = date.getFullYear()// 年
+					let MM = date.getMonth() + 1 // 月
+					MM = MM < 10 ? ('0' + MM) : MM
+					let d = date.getDate() // 日
+					d = d < 10 ? ('0' + d) : d
+					return y + '-' + MM + '-' + d
+				}
+			}
+
+
+		}
+	})
+</script>
+{/block}

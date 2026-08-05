@@ -1,0 +1,53 @@
+<div class="box box-danger">
+{:build_heading()}
+                            <div class="box-header with-border">
+                                <h3 class="box-title">数据清理</h3>
+
+                                <div class="box-tools pull-right">
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <form role="form" data-toggle="validator" method="POST" action="">
+					                <div class="col-md-12">
+					                   <div class="form-group">
+					                		<label class="col-sm-2 fh-label">数据类型</label>
+						                  	<div class="col-sm-10 input-group">
+						                  		  <label for="log_1"><input id="log_1" name="data[]" type="checkbox" value="order"  /> 投注记录</label>
+						                  		  &nbsp;
+						                    	  <label for="log_2"><input id="log_2" name="data[]" type="checkbox" value="mark" /> 账变记录</label>
+						                    	  &nbsp;
+						                    	  <label for="log_3"><input id="log_3" name="data[]" type="checkbox" value="open" /> 开奖记录</label>
+						                    	  &nbsp;
+						                    	  <label for="log_4"><input id="log_4" name="data[]" type="checkbox" value="upmark" /> 上下分记录</label>
+						                    	  
+						                    	   &nbsp;
+						                    	  <label for="log_6"><input id="log_6" name="data[]" type="checkbox" value="message" /> 客服记录</label>
+						                    </div>
+								       </div>
+					                </div>
+					                <div class="col-md-12">
+					                   <div class="form-group">
+					                		<label class="col-sm-2 fh-label">清理日期</label>
+						                  	<div class="col-sm-10 input-group">
+						                    	<input type="datetime"  value=""  class="form-control datetimerange"  data-rule="required" name="time" placeholder="清理日期">
+						                    </div>
+								       </div>
+					                </div>
+					                <div class="col-md-12">
+					                   <div class="form-group">
+					                		<label class="col-sm-2 fh-label">安全码</label>
+						                  	<div class="col-sm-10 input-group">
+						                    	<input type="password"  value=""  class="form-control"  data-rule="required" name="passwd" placeholder="安全码">
+						                    </div>
+								       </div>
+					                </div>
+								    <div class="col-md-12  col-xs-12 form-group">
+						              <div class="box-footer" style="text-align:center">
+							                <button type="submit" class="btn btn-info">提交</button>
+							          </div>
+							        </div>     
+					               </form> 
+					            </div>
+                            </div>
+                        </div>

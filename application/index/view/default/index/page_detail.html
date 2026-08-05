@@ -1,0 +1,66 @@
+{extend name="public/layout" /}
+
+{block name="addCss"}
+	<style>
+        body{background-color:#fff !important}
+div#content{
+				padding: 10px 10px;
+				font-size: 1rem;
+			}
+			div#content ul{
+				list-style: none;
+			}
+			div#content p{
+				line-height: 25px;
+				
+			}
+			div#correlation ol{
+				margin-left: 30px;
+			}
+			div#correlation ol li{
+				line-height: 1.6rem;
+			}
+			div#correlation ol li a{
+				text-decoration: none;
+			}
+			div#content h2,
+			div#correlation h2{
+				margin-bottom: 10px;
+			}
+			p{
+				background: transparent !important;
+			}
+			/* span{
+				color: #728DAF !important;
+			} */
+			h4{
+				background-color: transparent;
+			}
+			#correlation{
+				padding: 0 15px;
+			}
+			#content img{
+				max-width: 100%;
+			}
+	</style>
+{/block}
+
+{block name="content"}
+	 <div id="journalism">
+		<header class="header">
+          		<a class="back mt5" href="javascript:history.go(-1)"></a>
+          		<h4 class="ft20 blod">{$news.title}</h4>
+		</header>
+		<div class="header-space"></div>
+		<div id="content">
+			{$news.content}
+	    </div>
+	 </div>
+ 
+{/block}
+
+{block name="footer"}{/block}
+
+{block name="addJs"}
+ 
+{/block}

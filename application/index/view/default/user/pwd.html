@@ -1,0 +1,158 @@
+{extend name="public/layout" /}
+
+{block name="addCss"}
+<style>
+    body{
+        background: #f7f7fa;
+    }
+    .header-title{
+        font-size: 18px;
+        font-weight: bold;
+        padding: 13px 0;
+        text-align: center;
+        background: #fff;
+        width: 100%;
+    }
+    .btmline{
+        border-bottom: 1px solid #eee;
+    }
+    .blue{
+        text-align: center;
+        width: 100%;
+        background: #588bf7;
+        height: 150px;
+        color: #fff;
+    }
+    .blue article{
+        padding-top: 50px;
+    }
+    .blue article span{
+        display: block;
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    .sfk article{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    .sfk{
+        padding: 15px 5%;
+        background: #fff;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .sfk span{
+        color: #666;
+        font-size: 16px;
+    }
+    .sfk-left{
+        margin-right: 20px;
+        width: 20px;
+        height: 20px;
+    }
+    .sfk-right{
+        width: 15px;
+        height: 18px;
+    }
+    .dlmm{
+        background: #fff;
+    }
+    .dlmm-yzm{
+        border-bottom: 1px solid #eee;
+        display: flex;
+        flex-direction: row;
+        padding: 10px 5%;
+        align-items: center;
+    }
+    .dlmm-yzm span{
+        font-size: 16px;
+        width: 25%;
+    }
+    .dlmm-yzm article button{
+        border: 0;
+        background: #f7f7fa;
+        color:#588bf7;
+    }
+    .dlmm-yzm input,.dlmm-mm input{
+        width: 80%;
+    }
+    .dlmm-yzm article,.dlmm-mm article {
+        border-radius: 5px;
+        display: flex;
+        flex-direction: row;
+        padding: 10px 3%;
+        width: 70%;
+        background: #f7f7fa;
+        margin-left: 5%;
+    }
+    .dlmm-mm article img{
+        width: 25px;
+        height: 25px;
+    }
+    .dlmm-mm span{
+        font-size: 16px;
+        width: 25%;
+    }
+    .dlmm-mm{
+        border-bottom: 1px solid #eee;
+        display: flex;
+        flex-direction: row;
+        padding: 10px 5%;
+        align-items: center;
+    }
+    .dlbtn button{
+        background: #588bf7;
+        width: 60%;
+        border-radius: 20px;
+        color:#fff;
+        font-size: 16px;
+        padding: 10px 0;
+        display: block;
+        border: 0;
+        margin: 30px auto;
+        text-align: center;
+    }
+  </style>
+{/block}
+
+{block name="content"}
+   <div class="bgfff btmline">
+	 	<a class="back" href="javascript:history.go(-1)"></a>
+    	<div class="header-title" data-localize="zdy.xgdlmm">账户密码修改</div>
+   </div>
+   <div class="dlmm">
+       <div class="dlmm-mm">
+           <span  data-localize="zdy.ymm">原密码</span>
+           <article>
+               <input type="password" id="opassword" placeholder="请输入原密码" data-localize="safe.ppwd">
+           </article>
+       </div>
+       <div class="dlmm-mm">
+           <span  data-localize="zdy.xmm">新密码</span>
+           <article>
+               <input type="password" id="setpassword" placeholder="请输入密码" data-localize="safe.ppwd">
+           </article>
+       </div>
+       <div class="dlmm-mm">
+           <span  data-localize="zdy.qrmm">确认密码</span>
+           <article>
+               <input type="password"  id="verifypassword" placeholder="请输入密码" data-localize="safe.ppwd">
+           </article>
+       </div>
+   </div>
+   <div class="dlbtn">
+       <button data-localize="zdy.qrxg" id="sub_btn">确认修改</button>
+   </div>
+ 
+{/block}
+
+{block name="footer"}{/block}
+
+{block name="addJs"}
+ <script type="text/javascript">
+		pwd.init();
+ </script>
+{/block}

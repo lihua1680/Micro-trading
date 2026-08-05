@@ -1,0 +1,94 @@
+{extend name="public/layout" /}
+
+{block name="addCss"}
+	<link rel="stylesheet" href="__MB__/css/trades.css" />
+<script type='text/javascript'>
+    // (function(a, b, c, d, e, j, s) {
+    //     a[d] = a[d] || function() {
+    //         (a[d].a = a[d].a || []).push(arguments)
+    //     };
+    //     j = b.createElement(c),
+    //         s = b.getElementsByTagName(c)[0];
+    //     j.async = true;
+    //     j.charset = 'UTF-8';
+    //     j.src = 'https://static.meiqia.com/widget/loader.js';
+    //     s.parentNode.insertBefore(j, s);
+    // })(window, document, 'script', '_MEIQIA');
+    // _MEIQIA('entId', 'cc4093182a10b787f51bee44b1fdd1de');
+    // _MEIQIA('subSource', 'sub_source_1');
+</script>
+	<style>
+        .head{
+            font-weight: bold;
+            text-align: center;
+            margin: 10px 0 20px;
+            font-size: 18px;
+        }
+        .bg2{
+            background:#e94438 !important;
+        }
+        .main-price .name_1{
+            margin-top: 8px;
+        }
+    </style>
+{/block}
+
+{block name="content"}
+	<div class="content">
+            <div class="head" data-localize="footer.quotation">行情</div>
+            
+            <div class="pro-title">
+                <span data-localize="index.product">产品</span>
+                <span data-localize="index.lastPrice">最新价</span>
+                <span data-localize="index.change">涨跌幅</span>
+            </div>
+            
+            <div class="content-lever" v-show="tabType == 'lever'">
+                <ul>
+                
+                    {foreach $currency as $key=>$vo} 
+                    <li>
+                        <a href="{:url('index/trades')}?symbol={$vo.codename}" class="main-asset">
+                            <div class="flex between">
+                                <!-- <div class="logos flex alcenter" >-->
+                                <!--    <img width="22" height="22" src="{$vo.image}" alt="">-->
+                                <!--</div> -->
+                                <div class="main-name">
+                                    <div class="name_1" style="margin-top:8px;">
+                                       <h5>{$vo.title}</h5>
+                                    </div>
+                                    <div class="name_2">
+                                        <span data-localize="index.vol">量</span>:<span id="{$vo.code}_vol">{$vo.vol}</span>
+                                    </div>
+                                </div>
+                                <div class="main-price">
+                                    <div class="name_1 usdprice" style="color:#e94438" id="{$vo.code}_price">{$vo.price}</div>
+                                </div>
+                                <div class="main-rate"> 
+                                    <div class="rate_green" id="{$vo.code}_zf">
+                                        0%
+                                    </div>
+                                </div>
+                            </div>
+
+                        </a>
+                    </li>
+                    {/foreach}
+                    
+                    
+                </ul>
+            </div>
+            
+            
+           
+            
+        </div>
+        <div style="height: 51px;"></div>
+        
+{/block}
+
+{block name="addJs"}
+<script>
+    market.init();
+</script>
+{/block}

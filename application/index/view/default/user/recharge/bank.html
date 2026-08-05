@@ -1,0 +1,278 @@
+{extend name="public/layout" /}
+
+{block name="addCss"}
+<style>
+    body{
+        background: #f7f7fa;
+    }
+    .header-title{
+        font-size: 18px;
+        font-weight: bold;
+        padding: 13px 0;
+        text-align: center;
+        background: #fff;
+        width: 100%;
+    }
+    .btmline{
+        border-bottom: 1px solid #eee;
+    }
+    .bank-bg{
+        padding:  20px 0 40px;
+        background: #fff;
+        position: relative;
+    }
+    .bank-img{
+        position: absolute;
+        width: 90%;
+        margin: 0 5%;
+        min-height: 170px;
+    }
+    .bank-box{
+        position: relative;
+        width:80%;
+        margin:20px auto 0;
+    }
+    .bank-list{
+        display: flex;
+        flex-direction: row;
+        padding: 10px 3%;
+        position: relative;
+        color:#fff;
+        font-size: 14px;
+    }
+    .bank-list article{
+        display: flex;
+        flex-direction: row;
+        width:80%;
+    }
+    .bank-list article em{
+        border: 1px solid #fff;
+        border-radius: 5px;
+        color: #fff;
+        padding: 3px 10px;
+        height: 25px;
+        width: 25%;
+    }
+    .bank-list article aside{
+        word-break: break-all;
+        width: 75%;
+        margin-right: 5px;
+    }
+    .bank-list span{
+        font-size: 12px;
+        opacity:.7;
+        margin-right: 5px;
+        width: 22%;
+    }
+    .tips{
+        margin: 20px 0;
+        padding: 20px 5%;
+        background: #fff;
+    }
+    .tips-title{
+        position: relative;
+        text-align: center;
+    }
+    .line{
+        position: absolute;
+        top: 10px;
+        width: 30%;
+        height: 1px;
+        margin-right: .5rem;
+        background: linear-gradient(270deg,#fff,#62759a);
+    }
+    .line1{
+       position: absolute;
+        width: 30%;
+        height: 1px;
+        margin-left: .5rem;
+        background: linear-gradient(90deg,#fff,#62759a);
+        right: 0;
+        top: 10px;
+    }
+    .tips-txt{
+        padding: 20px 0;
+    }
+    .cz-box article span{
+        margin-right: 20px;
+    }
+    .cz-box article input{
+       width: 75%;
+        padding: 10px 5%;
+        background: #f7f7fa;
+        border-radius: 5px;
+    }
+    .cz-box article{
+        padding: 10px  0;
+        display: flex;
+        flex-direction: row;
+    }
+    .cz-box{
+        padding: 20px 5%;
+        margin-top: 20px;
+        background: #fff;
+    }
+    .submit button{
+        border: 0;
+        width: 60%;
+        padding: 10px 0;
+        font-size: 20px;
+        background: #588bf7;
+        border-radius: 20px;
+        color: #fff;
+        margin: 30px auto 0;
+        display: block;
+    }
+    .header-right{
+        position: absolute;
+    top: 12px;
+    right: 6%;
+    }
+  </style>
+{/block}
+
+{block name="content"}
+	 <div class="bgfff btmline">
+   	 	<a class="back" href="javascript:history.go(-1)"></a>
+    	<div class="header-title" data-localize="zdy.chongzhi">充值</div>
+    	<a href="{:url('user/recharge_record')}" class="header-right">充值记录</a>
+   	 </div>
+   <div class="bank-bg">
+       <img src="__MB__/images/bank_bg.png" class="bank-img">
+       <div class="bank-box">
+       <div class="bank-list">
+           <span data-localize="zdy.khm">开户名</span>
+           <article>
+               <aside>{$bankpay.web_bank_user}</aside>
+               <em data-localize="zdy.copy" class="copy" @click="copy('{$bankpay.web_bank_user}')">复制</em>
+           </article>
+       </div>
+       <div class="bank-list">
+           <span data-localize="zdy.yhkh">银行卡号</span>
+           <article>
+               <aside>{$bankpay.web_bank_number}</aside>
+               <em data-localize="zdy.copy"  class="copy" @click="copy('{$bankpay.web_bank_number}')">复制</em>
+           </article>
+       </div>
+       <div class="bank-list">
+           <span data-localize="zdy.khh">开户行</span>
+           <article>
+               <aside >{$bankpay.web_bank_name}</aside>
+               <em data-localize="zdy.copy" class="copy" @click="copy('{$bankpay.web_bank_name}')">复制</em>
+           </article>
+       </div>
+       </div>
+   </div>
+   
+   <div class="cz-box">
+       <article>
+           <span data-localize="zdy.czzh">充值账号</span>
+          <em>{$bankpay.web_bank_user}</em>
+       </article>
+       <article>
+           <span data-localize="zdy.zzje">转账金额</span>
+          <input type="number" v-model="amount" placeholder="请如实填写转账金额，只能整数" data-localize='zdy.txje'>
+       </article>
+   </div>
+   <div class="submit">
+        <button data-localize="auth.updata" @click="submit()">提交</button>
+   </div>
+   
+   <div class="tips">
+      <div class="tips-title">
+          <div class="line"></div>
+          <span data-localize="zdy.wxts">温馨提示</span>
+          <div class="line1"></div>
+      </div>
+      <div class="tips-txt">{$bankpay.web_bank_tips}</div>
+   </div>
+	   
+{/block}
+
+{block name="footer"}
+ 
+{/block}
+
+{block name="addJs"}
+<script type="text/javascript" src="__MB__/lib/vue.min.js"></script>
+<script type="text/javascript" src="__MB__/javascripts/clipboard.min.js"></script>
+<script>
+   
+   new Vue({
+       el:"#home",
+       data:{
+           bank_card:getlg('zjdyh'),
+           bank_hang:getlg('zjdyh'),
+           bank_name:getlg('zjdyh'),
+           total:0.00,
+           balance:[],
+           amount:'',
+           username:"",
+           token:get_user(),
+       },
+       filters: {
+    		toFixedTwo: function (value) {
+    			var vals = iTofixed(value,2)
+    			return vals;
+    		},
+    		toFixedfour: function (value) {
+    			var vals = iTofixed(value,4)
+    			return vals;
+    		}
+    	},
+       mounted(){
+           let that=this;
+           
+       },
+       methods:{
+           submit(){
+               let that=this;
+               let amount=this.amount*1;
+               if(!amount){
+                   layer.msg(getlg('enterzzje'));
+                   return 
+               }
+               if(amount%1!=0){
+                    layer.msg(getlg('enterzzs'));
+                   return 
+               }
+				layer_loading();
+				
+				initDatas({
+			           url: 'user/ajax',
+			           data: {
+			        	   'request':'upmark',
+			        	   'type':'上分',
+			        	   'pay_type':'bank_card',
+			        	   'money':amount
+			           },
+			           type: 'post'
+			       }, function (res) {
+			    	    that.amount='';
+		                layer_close();
+			           if (res.status == 1) { 
+			        	   layer_msg(res.msg);
+			           } else {
+			        	   layer_msg(res.msg);
+			           }
+			       });
+				
+				
+           },
+           copy(txt){
+              var clipboard = new Clipboard(".copy", {
+					text: function () {
+						return txt;
+					}
+				});
+				clipboard.on("success", function (e) {
+					layer_msg(getlg('copys'));
+				});
+				clipboard.on("error", function (e) {
+					layer_msg(getlg('pcopy'));
+				});    
+           },
+       },
+   })
+  </script>
+{/block}

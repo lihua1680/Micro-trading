@@ -1,0 +1,415 @@
+{extend name="public/layout" /}
+
+{block name="addCss"}
+<style>
+    body{
+        background: #f7f7fa;
+    }
+    .header-title{
+        font-size: 18px;
+        font-weight: bold;
+        padding: 13px 0;
+        text-align: center;
+        background: #fff;
+        width: 100%;
+    }
+    .btmline{
+        border-bottom: 1px solid #eee;
+    }
+    .blue{
+        text-align: center;
+        width: 100%;
+        background: #588bf7;
+        height: 150px;
+        color: #fff;
+    }
+    .blue article{
+        padding-top: 50px;
+    }
+    .blue article span{
+        display: block;
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    .sfk article{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    .sfk{
+        padding: 15px 5%;
+        background: #fff;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .sfk span{
+        color: #666;
+        font-size: 16px;
+    }
+    .sfk-left{
+        margin-right: 20px;
+        width: 20px;
+        height: 20px;
+    }
+    .sfk-right{
+        width: 15px;
+        height: 18px;
+    }
+    .withdraw{
+        background: #fff;
+        margin: 10px 0;
+    }
+    .withdraw-tip{
+        padding: 10px 5%;
+    }
+    .withdraw-input span{
+        color: #666;
+        font-size: 24px;
+    }
+    .withdraw-input{
+        font-size: 20px;
+        padding: 10px 5%;
+        border-bottom: 1px solid #eee;
+    }
+    .dlmm-mm{
+        border-bottom: 1px solid #eee;
+    display: flex;
+    flex-direction: row;
+    padding: 10px 5%;
+    align-items: center;
+    }
+    .dlmm-mm input {
+        width: 80%;
+    }
+    .dlmm-mm article img {
+         width: 25px;
+        height: 25px;
+    }
+    .dlmm-mm article {
+        border-radius: 5px;
+        display: flex;
+        flex-direction: row;
+        padding: 10px 3%;
+        width: 70%;
+        background: #f7f7fa;
+        margin-left: 5%;
+    }
+    .dlmm-mm span {
+        font-size: 16px;
+        width: 25%;
+    }
+    .withdraw-input input{
+        color: #999;
+    }
+    .withdraw-fee{
+        padding: 0px 5%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        color: #8d9dbc;
+    }
+    .dlbtn button {
+        background: #588bf7;
+        width: 60%;
+        border-radius: 20px;
+        color: #fff;
+        font-size: 16px;
+        padding: 10px 0;
+        display: block;
+        border: 0;
+        margin: 30px auto;
+        text-align: center;
+    }
+    .currencymask{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+    }
+    .currencymask-box span{
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 15px 0;
+        background: #fff;
+        border-bottom: 1px solid #eee;
+    }
+    .currencymask-box{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+    }
+    .currencymask-box em{
+        background: #ddd;
+        width: 100%;
+        height: 10px;
+        display: block;
+    }
+    .header-right {
+        position: absolute;
+        top: 12px;
+        right: 6%;
+    }
+.save button{
+	        border-radius: 30px;
+	        background: #588bf7;
+	    }
+	    .receivables input{
+	        border-radius: 5px;
+	        padding: 10px 5%;
+	        background: #f7f7fa;
+	        line-height: inherit;
+	    }
+	    .receivables .title{
+	        margin: 0;
+	        width: 25%;
+	    }
+	    .receivables{
+	        margin-top: 5px;
+	        background: #fff;
+	    }
+	    .receivables li{
+	        display: flex;
+	        flex-direction: row;
+	        align-items: center;
+	        padding: 10px 5%;
+	        
+            border-bottom: 1px solid #eee;
+	    }
+	    .receivables div{
+	        width: 75%;
+	        line-height: inherit;
+	        margin-top: 0;
+            margin-bottom: 0;
+	    }
+  </style>
+{/block}
+
+{block name="content"}
+	 <div class="bgfff btmline">
+    <a class="back" href="javascript:history.go(-1)">
+		
+	</a>
+    <div class="header-title" data-localize="zdy.txsq">提现申请</div>
+    <a href="{:url('user/withdraw_record')}" class="header-right" data-localize="zdy.txjl">提现记录</a>
+   </div>
+   <div class="blue">
+       <article>
+       <span>{{balance}}</span>
+       <aside data-localize="zdy.dqye">当前余额</aside>
+       </article>
+   </div>
+   <div></div>
+   
+   <ul class="nav receivables" id="bank_box">
+			<li>
+				<p class="title ft16" data-localize="zdy.khm">开户名</p>
+				<div class="clearfix">
+					<!-- <img src="images/user-icon.png" alt=""> -->
+					<input id="name" type="text" placeholder="开户名" data-localize="zdy.khm">
+				</div>
+			</li>
+			<li>
+				<p class="title ft16" data-localize="met.open">开户银行</p>
+				<div class="clearfix">
+					<!-- <img src="images/bank-name.png" alt=""> -->
+					<input id="yinhang" type="text" placeholder="请输入开户行名称" data-localize="met.popen">
+					<!-- <select id="bank_id_select" name="bank_id" class="flex2 ptb10 plr10">
+
+					</select> -->
+				</div>
+			</li>
+			<li>
+				<p class="title ft16" data-localize="met.bank">银行账号</p>
+				<div class="clearfix">
+					<input id="yinHu" type="text" placeholder="请输入开户行账号" data-localize="met.pbank">
+					<input id="save" type="hidden" value="0">
+				</div>
+			</li>
+			
+			</ul>
+   <div class="withdraw">
+       <div class="withdraw-tip">提现金额</div>
+
+	   <div class="withdraw-input">
+	       <span>￥</span>
+	       <input type="number" v-model="amount" @input="enteramount()" placeholder="请输入最小提现数量" data-localize="contract.minimum">
+	   </div>
+	   {if condition="$mpsswd_show eq '1'"}
+	   <div class="dlmm-mm" id="pwd_box">
+	       <span data-localize="zdy.txmm">提现密码</span> 
+	       <article><input placeholder="请输入密码"  data-localize="safe.ppwd" :type="eyeIndex==0?'password':'text'" v-model="password"> 
+	       <img src="__MB__/images/eye_no.png" :src="eye[eyeIndex]" @click="eyetab()"></article>
+	    </div>
+	   {/if}
+   </div>
+   <div class="withdraw-fee">
+       <span><span data-localize="deals.fee">手续费</span>:{:config('site.tx_fee_rate')}%</span>
+       <em><em data-localize="zdy.sjdz">实际到账</em>:{{daozhang}}</em>
+   </div>
+   <div class="dlbtn"><button data-localize="zdy.ljtx" @click="submit()">立即提现</button></div>
+ 
+{/block}
+
+{block name="footer"}{/block}
+
+{block name="addJs"}
+<script type="text/javascript" src="__MB__/lib/vue.min.js"></script>
+<script>
+   
+   var page = new Vue({
+       el:"#home",
+       data:{
+           eye:['__MB__/images/eye_no.png','__MB__/images/eye.png'],
+           eyeIndex:0,
+           bank:'',
+           address:'',
+           password:'',
+           amount:'',
+           fee_rate:{:config('site.tx_fee_rate')},
+           daozhang:0,
+           currencybool:false,
+          currencyIndex:0,
+          list:[],
+          balance:{$user.money},
+          currency_name:'',
+       },
+       filters: {
+           toFixeds(val){
+             var vals = iTofixed(val,0);
+	         return vals;
+           },
+           toFixedstwo(val){
+             var vals = iTofixed(val,8);
+	         return vals;
+           },
+       },
+       mounted(){
+           let that=this;
+           this.getCashInfo();
+       },
+       
+       methods:{
+           submit(){
+        	   
+               var data={};
+               let that=this;
+               let daozhang = parseFloat(that.daozhang);
+               let amount = parseFloat(that.amount);
+               
+               var name = $("#name").val();
+				var yinhang = $("#yinhang").val();
+				var yinHu = $("#yinHu").val();
+				var bank_branch = $("#bank_branch").val();
+				
+				if (!name) {
+				 	layer_msg('请输入开户名');
+				 	return false;
+				 }
+				 if (!yinhang) {
+				 	layer_msg('请输入开户银行名称');
+				 	return false;
+				 }
+				 if (!yinHu) {
+				 	layer_msg('请输入银行账户');
+				 	return false;
+				 }
+
+              if(!that.password && $('#pwd_box').length>0){
+                layer.msg(getlg('pinpwd'));
+                return;
+              }
+              
+              if(that.daozhang<=0){
+                layer.msg(getlg('sjdzje'));
+                return;
+              }
+              
+               if(that.currencyIndex==0){
+
+                data = {
+                	request:'downmark',
+                    money:amount,
+                    mpwd:that.password,
+                    account:yinHu,
+                	user_name:name,
+                	bank_name:yinhang,
+                	save:$("#save").val()
+                  }
+              }  
+             
+              layer.load(1)
+              initDatas({
+                    url: 'user/ajax',
+                    type: 'post',
+                    data: data
+                }, function (res) {
+                	layer.closeAll();
+                    if (res.status) {
+                    	that.balance = that.balance-amount;
+                    	layer_msg(res.msg);
+                    	setTimeout(() => {
+                            window.location.href = '{:url("user/withdraw_record")}';
+                        }, 1500);
+                    } else {
+                    	layer_msg(getlg(res.msg));
+                    }
+                });
+           },
+           getCashInfo(){
+                let that=this;
+	            initDatas({
+	                type:"post",
+	                url:"user/ajax",
+	                data:{
+	                	request:'cash_info'
+	                }
+	            },function(res){
+	                if(res.status){
+	                	var data = res.data;
+						if (Object.keys(data).length > 0) {
+							$("#name").val(data.user_name);
+							$("#yinhang").attr("value", data.bank_name);
+							$("#yinHu").attr("value", data.account);
+							$("#bank_branch").attr("value", data.bank_branch);
+							$("#yinhang").attr("value", data.bank_name);
+							$("#bank_box input").attr('disabled', true);
+							$("#save").val(1);
+						}
+	                	
+	                }
+	            });
+           },
+           adding(){
+             
+           },
+            eyetab(){
+                this.eyeIndex==1?this.eyeIndex=0:this.eyeIndex=1;   
+           },
+           enteramount(){
+        	    var dz = this.amount * (100 - this.fee_rate) / 100;
+                this.daozhang = dz.toFixed(2);
+           },
+           tabmask(){
+             this.currencybool=!this.currencybool;  
+           },
+           tabmenu(i){
+               this.daozhang='';
+               this.amount='';
+               this.bankId='';
+               this.address='';
+               this.password=''
+               this.currencybool=!this.currencybool;  
+               this.currencyIndex=i;
+               this.currency_name=this.list[i].symbol
+               this.balance=this.list[i].balance;
+           }
+       },
+   })
+  </script>
+{/block}

@@ -1,0 +1,163 @@
+{extend name="public/layout" /}
+
+{block name="addCss"}
+<style>
+    body{
+        background: #f7f7fa;
+    }
+    .header-title{
+        font-size: 18px;
+        font-weight: bold;
+        padding: 13px 0;
+        text-align: center;
+        background: #fff;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    .btmline{
+        border-bottom: 1px solid #eee;
+    }
+    .card-box{
+        border-bottom: 1px solid #eee;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        background: #fff;
+        padding: 20px 5%;
+        align-items: center;
+    }
+    .card-box aside{
+        font-size: 16px;
+    }
+    .card-box time{
+        color: #8d9dbc;
+        font-size: 12px;
+    }
+    .nodata{
+        text-align: center;
+        margin-top: 100px;
+    }
+    .nodata img{
+        width: 100px;
+    }
+    .nodata p{
+        color: #999;
+    }
+  </style>
+{/block}
+
+{block name="content"}
+  <div class="bgfff btmline">
+	   <a class="back" href="javascript:history.go(-1)"></a>
+	   <div class="header-title"  data-localize="zdy.czjl">充值记录</div>
+  </div>
+  
+   
+   
+   <template v-for="(item,index) in list">
+   <div class="card-box">
+       <article>
+           <aside>{{item.pay_type}}<span data-localize="assets.tmoney">充值</span>{{item.money}}</aside>
+           <time>{{item.time}}</time>
+       </article>
+       <span :style="item.status==2?'color:#00c087':'color:#f00'">{{item.status==0?getlg('shz'):item.status==1?getlg('czcg'):getlg('czsb')}}</span>
+   </div>
+   </template>
+   
+   <template  v-if="page<=2 && !list.length">
+   <div class="nodata">
+       <img src="__MB__/images/anonymous.png">
+       <p data-localize="transaction.nodata">暂无记录</p>
+   </div>
+   </template>
+   
+   <template  v-if="!bool">
+	   <div class="nodata" style="margin-top:0px;">
+	       <p data-localize="transaction.nodata" style="line-height:40px">加载完毕</p>
+	   </div>
+   </template>
+   
+{/block}
+
+{block name="footer"}
+
+{/block}
+{block name="addJs"}
+<script type="text/javascript" src="__MB__/lib/vue.min.js"></script>
+<script>
+   
+   var page = new Vue({
+       el:"#home",
+       data:{
+           page:1,
+           limit:10,
+           bool:true,
+           list:[],
+       },
+       filters: {
+    		toFixedTwo: function (value) {
+    			var vals = iTofixed(value,2)
+    			return vals;
+    		},
+    		toFixedfour: function (value) {
+    			var vals = iTofixed(value,4)
+    			return vals;
+    		}
+    	},
+       mounted(){
+           this.getData();
+           this.scrollBottom();
+       },
+       
+       methods:{
+           scrollBottom(){
+        	  
+        	   $(window).scroll(function () {
+                   if ($(document).height() - $(this).scrollTop() - $(this).height() < 30 && page.bool) {
+                	   //页面已滚动到最底部
+	       		        if(page.bool){
+	       		        	page.getData();
+	       		        }
+                      
+                   }
+               }); 
+       
+    		},
+            getData(){
+              let that=this;
+              if(that.bool){
+                  that.bool = false;
+                  layer.load(1);
+                  initDatas({
+	                    url:"user/ajax",
+	                    data:{
+	                    	request:'upmark_record',
+	                        page:that.page,
+	                        size:that.limit,
+	                    }
+	                },function(res){
+	                    that.page+=1;
+	                    layer.closeAll();
+	                    if(res.data.length){
+	                        for(let i=0;i<res.data.length;i++){
+	                            that.list.push(res.data[i]);
+	                        }
+	                        if (res.data.length < page.limit) {
+	                        	that.bool=false;
+	                        } else {
+	                        	that.bool=true;
+	                        }
+	                        
+	                    }else{
+	                        that.bool=false;
+	                    }
+	                })  
+                
+                
+                
+              }
+          },
+       },
+   })
+  </script>
+{/block}

@@ -1,0 +1,41 @@
+<form class="form-horizontal" method="get" action="./viewhd">
+
+    <input type="hidden" name="ids" id="ids" value="{$Request.get.ids}" />
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">截图说明:</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea name="content" rows="4" id="content_area" cols="80"></textarea>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <button type="button" class="btn btn-default" onclick="changeContent(&#39;因账户信息不符，根据国家法规临时冻结转账。&#39;)">转账截图-卡号不对</button>
+        <button type="button" class="btn btn-default" onclick="changeContent(&#39;因账户资金流水不足，根据国家法规暂停转账。&#39;)">转账截图-流水不足</button>
+        <button type="button" class="btn btn-default" onclick="changeContent(&#39;可根据情况自行填写内。&#39;)">转账截图-自定义内容</button>
+    </div>
+    
+    
+
+    <div class="form-group ">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="button" class="btn btn-success btn-embossed" onclick="goUrl()">确定</button>
+            <button type="button" class="btn btn-success btn-embossed" onclick="goUrl1()">确定(新窗口打开)</button>
+        </div>
+    </div>
+
+    
+</form>
+<script type="text/javascript" charset="utf-8">
+    function changeContent(str){
+        $('#content_area').html(str)
+    }
+    function goUrl(){
+        location.href = "./viewhd?ids="+$('#ids').val()+"&content="+ $('#content_area').html()
+    }
+    function goUrl1(){
+        window.open("./viewhd?ids="+$('#ids').val()+"&content="+ $('#content_area').html())
+    
+    }
+</script>

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>忘记密码</title>
+    <link rel="stylesheet" type="text/css" href="__MB__/lib/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="__MB__/css/common.css" />
+    <style type="text/css">
+        .header{
+            border-bottom:0;
+        }
+        .czmm-title{
+            font-size: 18px;
+            padding: 40px 10% 20px
+        }
+        .czmm-account input{
+            margin-left: 10px;
+            width: 87%;
+        }
+        .czmm-account{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            border-radius: 30px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            padding: 10px 5%;
+            margin: 0 10% 20px;
+        }
+        .czmm-yzm{
+            justify-content: space-around;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            border-radius: 30px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            padding: 10px 5%;
+            margin: 0 10% 20px;
+        }
+        .czmm-yzm button{
+            color: #3c0d75;
+            background: transparent;
+            border: 0;
+            
+        }
+        .czmm-yzm input{
+            width: 60%;
+            margin-left: 10px;
+        }
+         .icon-img{
+             width: 20px;
+             height: 20px;
+         }
+         .czmm-pwd{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            border-radius: 30px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            padding: 10px 5%;
+            margin: 0 10% 20px; 
+         }
+         .czmm-pwd input{
+             margin-left: 10px;
+             width: 83%;
+         }
+         .selected img {
+            width: 15px;
+            height: 15px;
+            margin-left: 5px;
+            margin-right: 5px;
+            position: relative;
+            top: 3px;
+        }
+
+        .selected p {
+            min-width: 40px;
+            text-align: center;
+            font-size: 14px;
+
+        }
+
+        .area-code {
+            width: 100.0vw;
+            background-color: #fff;
+            border: 1px solid #f1f1f1;
+            top: 40px;
+            position: absolute;
+            left: 0;
+            border-radius: 2px;
+            height: calc(100.0vh - 40px);
+            display: none;
+        }
+
+        .area-code li {
+            line-height: 40px;
+            text-align: center;
+            border-bottom: 1px solid #f1f1f1;
+            font-size: 14px !important;
+        }
+
+        .area-code li:last-child {
+            border: none;
+        }
+        .forget-btns{
+            display: block;
+            background: #588bf7;
+            color: #fff;
+            border-color: #588bf7;
+            width: 80%;
+            margin: 0 auto;
+            font-size: 16px;
+            border-radius: 30px;
+            height: 40px;
+            line-height: 40px;
+            border: none;
+            outline: none;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body class="bgWhite">
+    <header class="header">
+        <a class="back mt5" href="javascript:history.go(-1)"></a>
+        <!--<h4 class="ft16" data-localize="lg.ftpwds">忘记密码</h4>-->
+    </header>
+    <div class="header-space"></div>
+   <div class="czmm-title">重置密码</div>
+   <div class="czmm-account mb10">
+       <img src="__MB__/images/zh.png" class="icon-img">
+       <div class="flex selected">
+            <p></p>
+            <img width="15px" src="images/downs.png" alt="">
+        </div>
+       <input type="text" placeholder="请输入账号" id="name" data-localize="jc.paccount">
+   </div>
+   <div class="czmm-yzm">
+       <img src="__MB__/images/yz.png" class="icon-img">
+       <input type="text" id="verificate" placeholder="请输入验证码" data-localize="jc.pcode">
+       <button  id="fbtain" data-localize="lg.scode">发送验证码</button>
+   </div>
+   <div class="czmm-pwd">
+       <img src="__MB__/images/pwd.png" class="icon-img">
+       <input type="password" placeholder="请输入密码" id="setpassword"  data-localize="safe.ppwd">
+       <img src="__MB__/images/eye_no.png" data-type="0"  class="icon-img" onclick="setHS(this)">
+   </div>
+   <div class="czmm-pwd">
+       <img src="__MB__/images/pwd.png" class="icon-img">
+       <input type="password" placeholder="请再次输入密码" id="verifypassword" data-localize="safe.reppwd">
+       <img src="__MB__/images/eye_no.png" data-type="0"  class="icon-img" onclick="verify(this)">
+   </div>
+   <a  class="forget-btns btn btn-default" data-localize="safe.repwd">重置密码</a>
+   <ul class="area-code">
+
+    </ul>
+    <script type="text/javascript" src="__MB__/lib/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="__MB__/lib/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__MB__/javascripts/jquery.cookie.js"></script>
+    <script type="text/javascript" src="__MB__/lib/layer_mobile/layer.js"></script>
+    <script type="text/javascript" src="__MB__/lib/jquery.localize.min.js"></script>
+    <script type="text/javascript" src="__MB__/lib/language_cookie.js"></script>
+    <script type="text/javascript" src="__MB__/javascripts/main.js"></script>
+    <script type="text/javascript">
+        var countdown = 60;
+        var generate_code = $("#fbtain");
+        var indexs = 0;
+        function verify(that){
+            if($(that).attr('data-type')==0){
+                $(that).attr('data-type',1)
+                $(that).attr('src','__MB__/images/eye.png');
+                $("#verifypassword").attr('type','text');
+            }else{
+                $(that).attr('data-type',0)
+                $("#verifypassword").attr('type','password');
+                $(that).attr('src','__MB__/images/eye_no.png');
+            }
+        }
+        function setHS(that){
+            if($(that).attr('data-type')==0){
+                $(that).attr('data-type',1)
+                $(that).attr('src','__MB__/images/eye.png');
+                $("#setpassword").attr('type','text');
+            }else{
+                $(that).attr('data-type',0)
+                $("#setpassword").attr('type','password');
+                $(that).attr('src','__MB__/images/eye_no.png');
+            }
+        }
+        $(function () {
+            var areaCode = '';
+            $.ajax({
+                type: "post",
+                url: _API + "area_code",
+                dataType: "json",
+                success: function (data) {
+                    if (data.type == "ok") {
+                        var datas = data.message;
+                        if (datas.length > 0) {
+                            var htmls = '';
+                            for (var i = 0; i < datas.length; i++) {
+                                htmls += '<li class="flex between plr15" data-id="' + datas[i].id +
+                                    '" data-code="' + datas[i].area_code + '">'
+                                htmls += '<p>' + datas[i].name + '</p>'
+                                htmls += '<p>+' + datas[i].area_code + '</p>'
+                                htmls += '</li>'
+                            }
+                            $('.area-code').append(htmls)
+                            $('.selected p').attr('data-id', datas[0].id);
+                            $('.selected p').attr('data-codes', datas[0].area_code);
+                            $('.selected p').text('+' + datas[0].area_code);
+                            $('.selected').click(function () {
+                                $('.area-code').show();
+                            })
+                            $('.area-code li').click(function () {
+                                $('.area-code').hide();
+                                var ids = $(this).attr('data-id');
+                                var codes = $(this).attr('data-code');
+                                $('.selected p').attr('data-id', ids);
+                                $('.selected p').attr('data-codes', codes);
+                                $('.selected p').text('+' + codes);
+                            })
+
+                        }
+
+
+                    } else {
+                        layer_msg(data.message);
+                    }
+                }
+            });
+            if (get_param('type') == 1) {
+                $('.czmm-title').text(getlg('changePassword'))
+            } else {
+                $('.czmm-title').text(getlg('forgetPassword'));
+            }
+            //验证手机邮箱
+            $("#name").change(function () {
+                var reg = /^1[3456789]\d{9}$/;
+                var emreg =
+                    /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+                if ($("#name").val() != '') {
+                    $("#mes1").html("");
+                } else {
+                    $("#mes1").html(getlg('pmobile'));
+                    return;
+                }
+            });
+            //获取手机邮箱验证码
+				$("#fbtain").click(function() {
+					var disabled = $("#fbtain").attr("disabled");
+					var name = $("#name").val();
+					//					var reg = /^1[3456789]\d{9}$/;
+					var areaCodeId = $('.selected p').attr('data-id');
+					var areaCode = $('.selected p').attr('data-codes');
+				    // 	var reg = /^[0-9]\d*$/;
+    				if(!name){
+    				    layer.msg(getlg('phoneandemail'));
+    				    return
+    				}
+					var emreg =
+						/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+					var verifi = $("#verificate").val();
+					if(disabled) {
+						return false;
+					}
+						name = $("#name").val();
+						if(emreg.test(name)) {
+						    $.ajax({
+								type: "post",
+								url: _API + "sms_mail",
+								data: {
+									user_string: name,
+									email_code: verifi,
+									type: 'forget'
+								},
+								dataType: "json",
+								success: function(data) {
+									settime();
+									layer_msg(data.message);
+
+								}
+							});
+						} else {
+						    $.ajax({
+								type: "post",
+								url: _API + "sms_send",
+								data: {
+									user_string: name,
+									mobile_code: verifi,
+									type: 'forget',
+									area_code_id: areaCodeId,
+									area_code: areaCode
+								},
+								dataType: "json",
+								success: function(data) {
+									settime();
+									layer_msg(data.message);
+
+								}
+							});
+						}
+				});
+				$('.forget-btns').click(function() {
+					var s = function () {
+
+                        var ps = /^[a-zA-Z0-9]{6,16}$/;
+                        if (!ps.test($('#setpassword').val())) {
+                            layer_msg(getlg('plength'));
+                        } else {
+                            return true;
+                        }
+                    }
+    
+                    var ss = function () {
+                        if ($('#verifypassword').val() == $('#setpassword').val()) {
+                            return true;
+                        } else {
+                            layer_msg(getlg('twonot'));
+                        }
+                    }
+    
+                    var names = $('#name').val();
+                    var pass = $('#setpassword').val();
+                    var repass = $('#verifypassword').val();
+                    var verify = $("#verificate").val();
+                    var areaCodeId = $('.selected p').attr('data-id');
+					var areaCode = $('.selected p').attr('data-codes');
+					if(!names){
+    				    layer.msg(getlg('phoneandemail'));
+    				    return
+    				}
+					if (s() == true && ss() == true && verify != '') {
+                        $.ajax({
+                            type: "post",
+                            url: _API + "user/forget",
+                            data: {
+                                account: names,
+                                password: pass,
+                                repassword: repass,
+                                code: verify,
+                                area_code_id: areaCodeId,
+                                area_code: areaCode
+                            },
+                            datatype: "json",
+                            success: function (data) {
+                                layer_msg(data.message);
+                                if (data.type == "ok") {
+                                    $("#resetp").attr("disabled", "true");
+                                    setTimeout(function () {
+                                        $("#resetp").removeAttr("disabled");
+    
+                                        window.location.href = "login.html";
+                                    }, 3000);
+                                }
+                            }
+                        });
+                    } else {
+                        layer_msg(getlg('information'))
+                    }
+				})
+            $('.tabs p').click(function () {
+                indexs = $('.tabs p').index(this);
+                $('.tabs p').removeClass('active');
+                $(this).addClass('active');
+                if (indexs == 0) {
+                    $('.mobiles').show();
+                    $('.emails').hide();
+                } else {
+                    $('.mobiles').hide();
+                    $('.emails').show();
+                }
+
+            })
+        })
+
+
+
+        function settime() {
+            if (countdown == 0) {
+                generate_code.attr("disabled", false);
+                generate_code.html(getlg('tsend'));
+                $("#fbtain").css('color', '#5890bd');
+                countdown = 60;
+                return false;
+            } else {
+                $("#fbtain").attr("disabled", true);
+                $("#fbtain").css('color', '#b6bfc4');
+                generate_code.html(getlg('resend') + countdown);
+                countdown--;
+            }
+            setTimeout(function () {
+                settime();
+            }, 1000);
+        }
+        //
+        // function forgetpa() {
+
+        // }
+    </script>
+</body>
+
+</html>

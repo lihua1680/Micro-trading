@@ -1,0 +1,228 @@
+{extend name="public/layout" /}
+{block name="addCss"}
+<style>
+  body{
+    background: #f7f7fa;
+  }
+  .header-title{
+    font-size: 18px;
+    font-weight: bold;
+    padding: 13px 0;
+    text-align: center;
+    background: #fff;
+    width: 100%;
+  }
+  .btmline{
+    border-bottom: 1px solid #eee;
+  }
+  .blue{
+    text-align: center;
+    width: 100%;
+    background: #588bf7;
+    height: 150px;
+    color: #fff;
+  }
+  .blue article{
+    padding-top: 50px;
+  }
+  .blue article span{
+    display: block;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  .sfk article{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .sfk{
+    padding: 15px 5%;
+    background: #fff;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .sfk span{
+    color: #666;
+    font-size: 16px;
+  }
+  .sfk-left{
+    margin-right: 20px;
+    width: 20px;
+    height: 20px;
+  }
+  .sfk-right{
+    width: 15px;
+    height: 18px;
+  }
+  .withdraw{
+    background: #fff;
+    margin: 10px 0;
+  }
+  .withdraw-tip{
+    padding: 10px 5%;
+  }
+  .withdraw-input span{
+    color: #666;
+    font-size: 24px;
+  }
+  .withdraw-input{
+    font-size: 20px;
+    padding: 10px 5%;
+    border-bottom: 1px solid #eee;
+  }
+  .dlmm-mm{
+    border-bottom: 1px solid #eee;
+    display: flex;
+    flex-direction: row;
+    padding: 10px 5%;
+    align-items: center;
+  }
+  .dlmm-mm input {
+    width: 80%;
+  }
+  .dlmm-mm article img {
+    width: 25px;
+    height: 25px;
+  }
+  .dlmm-mm article {
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    padding: 10px 3%;
+    width: 70%;
+    background: #f7f7fa;
+    margin-left: 5%;
+  }
+  .dlmm-mm span {
+    font-size: 16px;
+    width: 25%;
+  }
+  .withdraw-input input{
+    color: #999;
+  }
+  .withdraw-fee{
+    padding: 0px 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: #8d9dbc;
+  }
+  .dlbtn button {
+    background: #588bf7;
+    width: 60%;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 16px;
+    padding: 10px 0;
+    display: block;
+    border: 0;
+    margin: 30px auto;
+    text-align: center;
+  }
+  .currencymask{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+  }
+  .currencymask-box span{
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 15px 0;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+  }
+  .currencymask-box{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+  .currencymask-box em{
+    background: #ddd;
+    width: 100%;
+    height: 10px;
+    display: block;
+  }
+  .header-right {
+    position: absolute;
+    top: 12px;
+    right: 6%;
+  }
+  .save button{
+    border-radius: 30px;
+    background: #588bf7;
+  }
+  .receivables input{
+    border-radius: 5px;
+    padding: 10px 5%;
+    background: #f7f7fa;
+    line-height: inherit;
+  }
+  .receivables .title{
+    margin: 0;
+    width: 25%;
+  }
+  .receivables{
+    margin-top: 5px;
+    background: #fff;
+  }
+  .receivables li{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 5%;
+
+    border-bottom: 1px solid #eee;
+  }
+  .receivables div{
+    width: 75%;
+    line-height: inherit;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .warp{
+    padding: 0px
+  }
+  .title{
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .content{
+    font-size: 14px;
+    line-height: 30px;
+  }
+  footer{
+    display: none;
+  }
+  .time{
+    margin-top: 10px;
+  }
+  .content img{
+    width: 100%!important;
+    height: auto!important;
+  }
+  .content p{
+
+  }
+</style>
+{/block}
+{block name="content"}
+<div class="bgfff btmline">
+  <a class="back" href="javascript:history.go(-1)">
+
+  </a>
+  <div class="header-title">公司简介</div>
+</div>
+<div class="warp">
+  <div class="content">
+    {$company}
+  </div>
+</div>
+{/block}
+{block name="footer"}{/block}

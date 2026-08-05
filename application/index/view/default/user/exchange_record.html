@@ -1,0 +1,310 @@
+{extend name="public/layout" /}
+
+{block name="addCss"}
+<link rel="stylesheet" href="__MB__/element-ui/lib/theme-chalk/index.css" />
+<style>
+		.content {
+			margin: 0 20px;
+		}
+
+		.content span {
+			display: block;
+			width: 60px;
+		}
+
+		.content input {
+			margin-top: 20px;
+			width: 44%;
+			border: 1px solid #f1f1f1;
+			line-height: 30px;
+			padding: 0 10px;
+		}
+
+		.password {
+			line-height: 40px;
+		}
+
+		.password input {
+			padding-left: 4px;
+		}
+
+		.btns {
+			height: 40px;
+			line-height: 40px;
+			border-radius: 2px;
+			background-color: #588bf7;
+			margin-top: 40px;
+		}
+
+		.btns button {
+			width: 100%;
+			background-color: rgba(0, 0, 0, 0);
+			border: none;
+			outline: none;
+		}
+
+		#currency {
+			padding: 0 10px;
+			border: 1px solid #f1f1f1;
+			width: 120px;
+			line-height: 30px;
+			height: 30px;
+
+		}
+
+		.logos {
+			width: 20px;
+			height: 20px;
+			position: relative;
+			top: 5px;
+			margin-right: 6px;
+		}
+
+		.tab-logo {
+			width: 30px;
+			height: 30px;
+			margin-top: 5px;
+		}
+
+		.coin-currency-flash {
+			padding-bottom: 20px;
+		}
+
+		.width1 {
+			width: 23%;
+		}
+
+		.width2 {
+			width: 15%;
+		}
+
+		.width3 {
+			width: 26.5%;
+		}
+
+		.order-list {
+			width: 100%;
+			margin-top: 10px;
+		}
+
+		.order-list ul {
+			width: 100%;
+			background-color: #fff;
+			margin-top: 10px;
+		}
+
+		.order-list ul li {
+		    word-break: break-all;
+			border-bottom: 1px solid #f1f1f1;
+			padding: 10px 0;
+		}
+
+		.bg {
+			background-color: #fff;
+			padding-bottom: 10px;
+			padding-top: 10px;
+			margin-top: 20px;
+		}
+
+		.order-list-text {
+			width: 100%;
+			line-height: 40px;
+			background-color: #fff;
+			padding-left: 10px;
+		}
+		.tl{
+		    width: 40%;
+		    text-align: left;
+            border: 1px solid #ddd;
+            height: 38px;
+            border-radius: 5px;
+		}
+		.el-dropdown {
+		    width: 100%;
+            display: inline-block;
+            position: relative;
+            color: #606266;
+            font-size: 14px;
+            padding: 10px;
+        }
+        .el-icon--right{
+            margin-left: 65px;
+        }
+        .line{
+            height: 10px;
+            background: #f4f8fb;
+        }
+        .duihuan{
+            padding: 20px 3%;
+            border-bottom: 1px solid #eee;
+        } 
+        .duihuan h1{
+            color: #90a2b0;
+            font-size: 16px;
+        }
+        .duihuan-row{
+            display: flex;
+            flex-direction: row;
+            margin-top: 20px;
+            justify-content: space-between;
+        }
+        .duihuan-row input{
+            width: 55%;
+            font-size: 20px;
+        }
+        .duihuan-row em{
+            font-size: 20px;
+        }
+        .duihuan-row span{
+            color: #588bf7;
+        }
+        .huilv{
+            display: flex;
+            flex-direction: row;
+            margin-top: 15px;
+        }
+        .huilv article{
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            width: 33.33%;
+        }
+        .huilv span{
+            font-size: 12px;
+            color: #90a2b0;
+        }
+        .huilv em{
+            font-size: 12px;
+            color: #62759a;
+        }
+.nodata{
+        text-align: center;
+        margin-top: 100px;
+    }
+    .nodata img{
+        width: 100px;
+    }
+    .nodata p{
+        color: #999;
+    }
+	</style>
+{/block}
+
+{block name="content"}
+   <header class="header">
+			<a class="back mt5" href="javascript:history.go(-1)"></a>
+			<h4 class="ft16" data-localize="jc.record">兑换记录</h4>
+			
+		</header>
+		<div class="header-space"></div>
+		
+
+		<!-- 兑换记录 -->
+		<div class="order-list" style="display:none">
+			<ul>
+				<li class="flex between ft10 tc alcenter">
+					<p class="width1" data-localize="deals.type">类型</p>
+					<p class="width2" data-localize="assets.num">数量</p>
+					<p class="width3" data-localize="zdy.huilv">价格</p>
+					<p class="width3" data-localize="assets.time">时间</p>
+					<p class="width2" data-localize="contract.state">状态</p>
+				</li>
+				<li class="flex between ft10 tc alcenter" v-for="item in list" :key="item.id">
+					<p class="width1">{{item.type_a}} {{getlg('match')}} {{item.type_b}}</p>
+					<p class="width2">{{item.amount}}</p>
+					<p class="width3">{{item.rate|toFixedfour}}</p>
+					<p class="width3">{{item.add_time}}</p>
+					<p class="width2">已通过</p>
+				</li>
+			</ul>
+		</div>
+		
+		<template  v-if="!bool">
+		   <div class="nodata" style="margin-top:0px;">
+		       <p data-localize="transaction.nodata" style="line-height:40px">加载完毕</p>
+		   </div>
+	   </template>  
+ 
+{/block}
+
+{block name="footer"}{/block}
+
+{block name="addJs"}
+<script type="text/javascript" src="__MB__/lib/vue.min.js"></script>
+<script>
+   
+   var page = new Vue({
+       el:"#home",
+       data:{
+           page:1,
+           limit:20,
+           bool:true,
+           list:[],
+       },
+       filters: {
+    		toFixedTwo: function (value) {
+    			var vals = iTofixed(value,2)
+    			return vals;
+    		},
+    		toFixedfour: function (value) {
+    			var vals = iTofixed(value,4)
+    			return vals;
+    		}
+    	},
+       mounted(){
+           this.getData();
+           this.scrollBottom();
+       },
+       
+       methods:{
+           scrollBottom(){
+        	  
+        	   $(window).scroll(function () {
+                   if ($(document).height() - $(this).scrollTop() - $(this).height() < 30 && page.bool) {
+                	   //页面已滚动到最底部
+	       		        if(page.bool){
+	       		        	page.getData();
+	       		        }
+                      
+                   }
+               }); 
+       
+    		},
+            getData(){
+              let that=this;
+              if(that.bool){
+                  that.bool = false;
+                  layer.load(1);
+                  initDatas({
+	                    url:"user/ajax",
+	                    data:{
+	                    	request:'exchange_record',
+	                        page:that.page,
+	                        size:that.limit,
+	                    }
+	                },function(res){
+	                    that.page+=1;
+	                    layer.closeAll();
+	                    if(res.data.length){
+	                        for(let i=0;i<res.data.length;i++){
+	                            that.list.push(res.data[i]);
+	                        }
+	                        if (res.data.length < page.limit) {
+	                        	that.bool=false;
+	                        } else {
+	                        	that.bool=true;
+	                        }
+	                        $(".order-list").show();
+	                    }else{
+	                        that.bool=false;
+	                    }
+	                })  
+                
+                
+                
+              }
+          },
+       },
+   })
+  </script>
+{/block}

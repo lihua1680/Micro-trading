@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="__MB__/lib/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="__MB__/css/common.css" />
+    <link rel="stylesheet" type="text/css" href="__MB__/css/login.css" />
+    <style>
+     .form-input input{
+            /*margin-left: 10px;*/
+            width: 44%;
+            flex-grow: 1;
+        }
+        .form-input a{
+            flex-grow: 1;
+            text-align: right;
+        }
+        /*.form-input{*/
+        /*    display: flex;*/
+        /*    flex-direction: row;*/
+        /*    align-items: center;*/
+        /*    border-radius: 30px;*/
+        /*    border: 1px solid #ddd;*/
+        /*    margin-bottom: 10px;*/
+        /*    padding: 10px 5%;*/
+        /*    margin: 0 10% 20px;*/
+        /*}*/
+         .selected img{
+            width: 15px;
+            height:15px;
+            margin-left: 5px;
+            margin-right: 5px;
+            /* position: relative;
+            top: 3px; */
+        }
+        .selected p{
+            min-width: 40px;
+            text-align: center;
+            font-size: 14px;
+
+        }
+        .mask-content{
+            width: 100.0vw;
+            background-color: #fff;
+            border: 1px solid #f1f1f1;
+            top:48px;
+            position: absolute;
+            left: 0;
+            border-radius: 2px;
+            height: calc(100.0vh - 48px);
+        }
+        .area-code li{
+            line-height: 40px;
+            text-align: center;
+            border-bottom: 1px solid #f1f1f1;
+            font-size: 14px!important;
+        }
+        .area-code li:last-child{
+            border: none;
+        }
+        .active{
+            color: #3d106d;
+        }
+    </style>
+</head>
+
+<body class="bgWhite">
+    <div id="app" v-cloak>
+        <div class="lang-box">
+            <span :class="langIndex===0?'lang-active':''" @click="langClick(0)">中</span>
+            <span :class="langIndex===1?'lang-active':''"  @click="langClick(1)">En</span>
+        </div>
+        <div class="header-space"></div>
+        
+        <div id="login">
+            <div class="logo">
+                <img src="{:config('site.web_icon')}" /> 
+            </div>
+            <div class="theme mt40">
+                <div class="form-input">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAABrElEQVRYR+2Zz07CQBDGvxES/wSMr8CBE62GxYNC9SnA6DsoD4O+g0Z9C1vwQgm2nDz4BF4EkYN2DESMGtgudi8k21vTma/f/mY7TaeEJTlI1afbDo6YqE7ADoCMat6cuAEDXWJuOCX7WkVLyajrh+cATlUE/xFz4QjrLC4v1qjnh8cMXMYJJbkeASeHwrqSacQaddtBC0R7MhE7n8NmZmNmyMtgiODxSb4O5nunZO8nMnrnhyMCVmUi2/kcsnOM9gdDPMQZBUaOsNYTGXX9kJOUVTXXEZa0uvGlN0Z/s9ZGtFIsqFZxoTiv05vEG6MLYZMEG6K6SE51DFFDVNebyfRR0/A1P02mPWkGCkPUEDUNX9MeMA+TJpDfMoaoIaqrPekm+VdP23e9MfpFQAfRNwBrikSfkUpXoo/3FIE9Am2p5DH49UDY0nG7yjSvCUA6ZP1hpu0Ia3d87naCAEyWilGAW46wy4nmo54fVhm4UbshwMB4xJ0moKqaQ0CtIqzbREYndJbhZ8N0lc1OrxaB6xj/vmFkVWnNjCP0AXRXQI1ysaBUrdg9msiQxuRPAcYfOjnJvOwAAAAASUVORK5CYII=">
+                    <input type="text" v-model="userName" :placeholder="getlg('phoneandemail')">
+                </div>
+                <div class="form-input">
+                   <img src="__MB__/images/yz.png" class="icon-img">
+                   <input type="text" v-model="code" placeholder="请输入验证码" autocomplete="off" data-localize="lg.pcode">
+                   
+                   <a href="javascript:void(0)" v-if="!isSendCode" style="color:#5890bd" @click="getPhoneCode">{{send_btn_msg}}</a>
+                   <a href="javascript:void(0)" v-else style="color:#b6bfc4">{{send_btn_msg}}</a>
+                </div>
+                
+                <a class="btn btn-default" id="sendLogin" @click="login" data-localize="lg.lgs">登录</a>
+
+               
+                <div class="nocount">
+                    <div style="flex-grow: 0;margin-right: 1rem;">
+                        <a href="{:url('home/reg')}" data-localize="lg.register">注册</a>
+                    </div>
+                    <div style="flex-grow:1;text-align:left">
+                        <a href="{:url('home/login_p')}" data-localize="lg.password_login">密码登录</a>
+                        
+                    </div>
+                    <div style="flex-grow:1;text-align:right">
+                        <a href="{$kefu_url}" data-localize="lg.kefu">客服</a>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+        <div class="mask-content" v-show="listShow">
+            <ul class="area-code" >
+                <li v-for="item in areaList" :key="item.id" @click="areaSelected(item.id,item.area_code,item.name)" class="flex between plr15">
+                    <p>{{item.name}}</p>
+                    <p>+{{item.area_code}}</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script type="text/javascript" src="__MB__/lib/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="__MB__/javascripts/jquery.cookie.js"></script>
+    <script type="text/javascript" src="__MB__/lib/layer_mobile/layer.js"></script>
+    <script type="text/javascript" src="__MB__/lib/vue.min.js"></script>
+    <script type="text/javascript" src="__MB__/lib/jquery.localize.min.js"></script>
+    <script type="text/javascript" src="__MB__/lib/language_cookie.js"></script>
+    <script type="text/javascript" src="__MB__/javascripts/main.js"></script>
+    <script type="text/javascript" src="__MB__/javascripts/login.js?t=2020"></script>
+</body>
+
+</html>

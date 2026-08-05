@@ -1,0 +1,32 @@
+<?php
+
+return [
+    'Id'              => 'ID',
+    'Account'         => '账户',
+    'Passwd'          => '密码',
+    'Username'        => '昵称',
+    'Id_card'=>'身份证号',
+    'Id_img_1'=>'身份证正面照',
+    'Id_img_2'=>'身份证反面照',
+    'Real_name'       => '真实姓名',
+    'User_avatar'     => '头像',
+    'Money'           => '余额',
+    'Mpasswd'         => '资金密码',
+    'Roomid'          => '房间号',
+    'Phone'           => '手机号',
+    'Agent'           => '上级ID',
+    'Isagent'         => '是否代理',
+    'Is_online'       => '是否在线',
+    'Auth_status'       => '实名认证',
+    'Status'          => '用户状态',
+    'Say_limit'       => '是否禁言',
+    'Real'            => '用户类别',
+    'Level'           => '用户级别',
+    'Remark'          => '备注',
+    'Reg_time'        => '注册时间',
+    'Reg_ip'          => '注册IP',
+    'Reg_place'       => '注册地点',
+    'Last_login_time' => '最后登陆时间',
+    'Last_login_ip'   => '上次登陆IP',
+    'Login_type'      => '登录类型'
+];

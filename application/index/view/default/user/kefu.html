@@ -1,0 +1,139 @@
+{extend name="public/layout" /}
+
+{block name="addCss"}
+
+<script type='text/javascript'>
+    // (function(a, b, c, d, e, j, s) {
+    //     a[d] = a[d] || function() {
+    //         (a[d].a = a[d].a || []).push(arguments)
+    //     };
+    //     j = b.createElement(c),
+    //         s = b.getElementsByTagName(c)[0];
+    //     j.async = true;
+    //     j.charset = 'UTF-8';
+    //     j.src = 'https://static.meiqia.com/widget/loader.js';
+    //     s.parentNode.insertBefore(j, s);
+    // })(window, document, 'script', '_MEIQIA');
+    // _MEIQIA('entId', 'cc4093182a10b787f51bee44b1fdd1de');
+    // _MEIQIA('subSource', 'sub_source_1');
+</script>
+	<link rel="stylesheet" href="__MB__/css/trades.css" />
+	  <style>
+    body{
+        background: #f7f7fa;
+    }
+    .header-title{
+        font-size: 18px;
+        font-weight: bold;
+        padding: 13px 0;
+        text-align: center;
+        background: #fff;
+        width: 100%;
+    }
+    .header-bg{
+        margin-top: 10px;
+        display: flex;
+        flex-direction: row;
+        padding: 0 2%;
+    }
+    .header-bg a:last-child{
+        margin-right: 0;
+    }
+    .header-bg a{
+        width: 48%;
+        margin-right: 4%;
+    }
+    .header-bg a img{
+        width: 100%;
+    }
+    .zichan-rd{
+        margin: 10px 2% 40px;
+        border-radius: 10px;
+        background: #fff;
+    }
+    .zichan-top{
+        width:100%;
+        text-align: center;
+        padding: 10px 0;
+        color: #62759a;
+        border-bottom: 1px solid #eee;
+    }
+    #mychat{
+        position: relative;
+        top: -20px;
+        width: 100%;
+        height: 300px;
+        margin: 0 auto;
+        border-bottom: 1px solid #eee;
+    }
+    .balance-list{
+        display: flex;
+        flex-direction: row;
+        padding:0 5%;
+        justify-content: space-between;
+    }
+    .balance-left{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    .balance-left span{
+        font-size: 16px;
+    }
+    .balance-left em{
+        margin-right: 5px;
+        width: 12px;
+        height: 12px;
+        display: block;
+        border-radius: 50%;
+    }
+    .balance-center{
+        font-size: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .hs{
+        color:#62759a;
+    }
+    .balance-right{
+        display: flex;
+        align-items: center;
+        color:#62759a;
+        font-size: 12px;
+    }
+    body{
+        background: #fff;
+    }
+    .balance-list:nth-of-type(odd)  .ql{ color:#588bf7;} 
+    .balance-list:nth-of-type(even)  .ql{ color:#ebac34;}
+    .balance-list:nth-of-type(odd)  .autocolor{ background:#588bf7;} 
+    .balance-list:nth-of-type(even)  .autocolor{ background:#ebac34;}
+  </style>
+{/block}
+
+{block name="content"}
+	 <!--<div class="bgfff">-->
+  <!--      <div class="header-title" data-localize="assets.a02">客服</div>-->
+  <!--   </div>-->
+     <iframe id="iframe_box" src="" frameborder="0" style="position:fixed;top:0;left:0;width:100%;"></iframe>
+
+{/block}
+
+{block name="addJs"}
+    <script type="text/javascript" src="__MB__/lib/vue.min.js"></script>
+    <script type="text/javascript" src="__MB__/javascripts/echarts.min.js"></script>
+    <script>
+    (function(){
+        var iframe_box = document.getElementById('iframe_box')
+        iframe_box.style.height = (window.innerHeight - 60) + 'px'
+       
+        let url = "{$site.kefu_url}?name=" + "{$cuser['real_name']}_{$cuser['id']}"+"&id="+"{$cuser['id']}"
+        
+        iframe_box.src = url
+        
+    })()
+    
+   
+  </script>
+{/block}

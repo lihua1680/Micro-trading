@@ -1,0 +1,84 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>标题</th>
+            <th>内容</th>
+        </tr>
+    </thead>
+    <tbody>
+         <tr>
+             <td>会员号</td>
+             <td>{$row['id']}</td>
+         </tr>
+         <tr>
+             <td>会员名称</td>
+             <td>{$row['username']}</td>
+         </tr>
+         <tr>
+             <td>会员头像</td>
+             <td><img src="{$row['user_avatar']}" width="45px"></td>
+         </tr>
+         <tr>
+             <td>余额</td>
+             <td>{$row['money']}</td>
+         </tr>
+         <tr>
+             <td>上级代理</td>
+             <td>{:is_empty($row['agent'], '无')}</td>
+         </tr>
+         <tr>
+             <td>是否代理</td>
+             <td>{if condition="$row.isagent eq 1"}是{else/}否{/if}</td>
+         </tr>
+         <tr>
+             <td>是否在线</td>
+             <td>{if condition="$row.is_online eq 1"}是{else/}否{/if}</td>
+         </tr>
+         <tr>
+             <td>用户状态</td>
+             <td>{if condition="$row.status eq 1"}正常{else/}冻结{/if}</td>
+         </tr>
+         <tr>
+             <td>用户类别</td>
+             <td>{if condition="$row.isagent eq 1"}代理{else/} {if condition="$row.real eq 1"}会员{else/}假人{/if} {/if}</td>
+         </tr>
+         <tr>
+             <td>备注</td>
+             <td>{$row['remark']}</td>
+         </tr>
+         <tr>
+             <td>上次登陆时间</td>
+             <td>{$row['last_login_time']|is_empty}</td>
+         </tr>
+         <tr>
+             <td>上次登陆IP</td>
+             <td>{$row['last_login_ip']|is_empty}</td>
+         </tr>
+         <tr>
+             <td>上次登陆次数</td>
+             <td>{$row['login_times']|is_empty}</td>
+         </tr>
+         
+         <tr>
+             <td>提现账号</td>
+             <td>{$row['attach_text']['bank_card']['account']|is_empty}</td>
+         </tr>
+         
+         <tr>
+             <td>提现名字</td>
+             <td>{$row['attach_text']['bank_card']['user_name']|is_empty}</td>
+         </tr>
+         
+         <tr>
+             <td>提现银行</td>
+             <td>{$row['attach_text']['bank_card']['bank_name']|is_empty}</td>
+         </tr>
+        
+    </tbody>
+</table>
+<div class="hide layer-footer">
+    <label class="control-label col-xs-12 col-sm-2"></label>
+    <div class="col-xs-12 col-sm-8">
+        <button type="reset" class="btn btn-primary btn-embossed btn-close" onclick="Layer.closeAll();">{:__('Close')}</button>
+    </div>
+</div>

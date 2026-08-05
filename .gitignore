@@ -1,0 +1,29 @@
+# Runtime / cache
+/runtime/*
+!/runtime/.gitkeep
+
+# Dependencies (optional — remove if you want vendor tracked)
+# /vendor/
+
+# Env & secrets
+.env
+.env.*
+!.env.example
+
+# Archives / dumps
+*.rar
+*.zip
+*.7z
+*.sql
+*.log
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Uploads / local data (keep structure if needed)
+/public/uploads/*
+!/public/uploads/.gitkeep

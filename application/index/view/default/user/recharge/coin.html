@@ -1,0 +1,230 @@
+{extend name="public/layout" /}
+
+{block name="addCss"}
+<style>
+    .codes {
+        width: 220px;
+        margin: 50px auto 20px auto;
+    }
+
+    #code {
+        width: 220px;
+        height: 220px;
+        border: 10px solid #fff;
+    }
+    .tab-list{
+    	flex-direction: row;
+    	margin:1rem 5% 0;
+    	display: none;
+    }
+    .tab-list span:last-child{
+    	margin-left: 5%;
+    }
+    .tab-list span{
+    	color:#fff;
+    	width: 47%;
+	    border-radius: 20px;
+	    padding: 0.5rem 0;
+	    text-align: center;
+	    border:1px solid #588bf7;
+	    color:#333;
+    }
+    .tabactive{
+    	color:#fff !important;
+    	background: #588bf7;
+    }
+    .cz-row {
+	    display: flex;
+	    flex-direction: row;
+	    align-items: center;
+	    margin: 1rem 5%;
+	}
+	.cz-row label {
+	    width: 30%;
+	    color: #999;
+	    font-size: 1rem;
+	}
+	.cz-row input {
+	    width: 70%;
+	    background: #ddd;
+	    padding: 0.3rem;
+	    color: #999;
+	    border-radius: 3px;
+	}
+	.cz-row{
+		color:#f00;
+	}
+	.qb-box {
+	    margin: 1rem 5%;
+	    font-size: 1rem;
+	    color: #999;
+	}
+	.qb-box input {
+	    display: block;
+	    width: 100%;
+	    color: #999;
+	    background: #ddd;
+	    padding: 0.3rem;
+	    border-radius: 3px;
+	    margin: 0.3rem 0;
+	}
+	.qb-box span {
+	    font-size: 0.8rem;
+	    color: #f00;
+	}
+	.ck-btn {
+	    background: #588bf7;
+	    margin: 40px 16% 0;
+	    border-radius: 5px;
+	    padding: 10px 0;
+	    color: #fff;
+	    text-align: center;
+		
+	}
+	.copy{
+		background-color: #f00;
+	    color: #fff !important;
+	    padding: 4px 10px;
+	    border-radius: 15px;
+		float:right
+	}
+	.btn-list{height:30px;margin:10px 0}
+	.btn-list li{float:left;padding:5px 15px;margin-right:30px;background-color:#588bf7;color:#fff}
+	.btn-list .active{background-color:#f00 !important}
+</style>
+{/block}
+
+{block name="content"}
+	 <header class="header">
+        <a class="back mt5" href="javascript:history.go(-1)"> </a>
+        <h4 class="ft16" data-localize="assets.cmoney">充币</h4>
+    </header>
+    <div class="header-space"></div>
+    <div class="tab-list">
+    </div>
+    <div class="plr15">
+
+	    <div class="qb-box">
+	    	<aside>充值数量：</aside>
+	    	<input id="number" type="number" v-model="amount" value="">
+	    	
+	    </div>
+	    <div class="qb-box">
+	    	<aside>USDT转币地址：</aside>
+	    	
+	    	<ul class="btn-list">
+	    	   {foreach $coin as $key=>$val}
+	    		<li :class="[{'active':coinType == '<?php echo $key; ?>'}]" @click='change("<?php echo $key; ?>")'>{$key}</li>
+	    	   {/foreach}
+	    	</ul>
+	    	
+	    	<input id="address"  type="text" disabled  v-model="tokenurl">
+	    	<span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="copy blue tc ft14"  @click="copy()" data-localize="assets.copyaddress">复制地址</span></span>
+	    </div>
+	    
+	    <div class="ck-btn" id="submit"  @click="submit()">点击提交</div>
+        <div class="ft12 mt40 colorGrey">
+            * <span data-localize="assets.a01">请勿向上述地址充值任何非</span> <span class="titles"></span><span data-localize="assets.a02">资产，</span><span data-localize="assets.a03">否则将不可找回。</span><br>
+            * <span data-localize="assets.a06">最小充值金额：</span>100 <span class="titles"></span>。<br>
+            * <span data-localize="assets.a10">你的会在3-6个网络确认后到帐。</span> <br>
+            * <span data-localize="assets.a11">所有MyToken的充币地址都是多重签名冷钱包地址，所有钱包均不曾被联网的机器读取。</span>
+           
+        </div>
+	   
+{/block}
+{block name="footer"}
+
+{/block}
+
+{block name="addJs"}
+ <script type="text/javascript" src="__MB__/lib/vue.min.js"></script>
+<script type="text/javascript" src="__MB__/javascripts/clipboard.min.js"></script>
+<script>
+   
+   new Vue({
+       el:"#home",
+       data:{
+           bank_card:getlg('zjdyh'),
+           bank_hang:getlg('zjdyh'),
+           bank_name:getlg('zjdyh'),
+           total:0.00,
+           balance:[],
+           amount:'',
+           username:"",
+           coinType:'{$coinKey[0]}',
+           tokenurl:'{$coinList[0]}',
+           coin:{$coinData},
+           token:get_user(),
+       },
+       filters: {
+    		toFixedTwo: function (value) {
+    			var vals = iTofixed(value,2)
+    			return vals;
+    		},
+    		toFixedfour: function (value) {
+    			var vals = iTofixed(value,4)
+    			return vals;
+    		}
+    	},
+       mounted(){
+           let that=this;
+           
+       },
+       methods:{
+    	   change(key){
+    		   this.coinType = key;
+    		   this.tokenurl = this.coin[key];
+    	   },
+           submit(){
+               let that=this;
+               let amount=this.amount*1;
+               if(!amount){
+                   layer.msg(getlg('enterzzje'));
+                   return 
+               }
+               if(amount%1!=0){
+                    layer.msg(getlg('enterzzs'));
+                   return 
+               }
+				layer_loading();
+				
+				initDatas({
+			           url: 'user/ajax',
+			           data: {
+			        	   'request':'coin_upmark',
+			        	   'type':'上分',
+			        	   'pay_type':'coin',
+			        	   'money':amount,
+			        	   'address_type':this.coinType
+			           },
+			           type: 'post'
+			       }, function (res) {
+			    	    that.amount='';
+		                layer_close();
+			           if (res.status == 1) { 
+			        	   layer_msg(res.msg);
+			           } else {
+			        	   layer_msg(res.msg);
+			           }
+			       });
+				
+				
+           },
+           copy(){
+        	  txt = this.tokenurl;
+              var clipboard = new Clipboard(".copy", {
+					text: function () {
+						return txt;
+					}
+				});
+				clipboard.on("success", function (e) {
+					layer_msg(getlg('copys'));
+				});
+				clipboard.on("error", function (e) {
+					layer_msg(getlg('pcopy'));
+				});    
+           },
+       },
+   })
+  </script>
+{/block}

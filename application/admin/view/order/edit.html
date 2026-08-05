@@ -1,0 +1,117 @@
+<form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('User_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-user_id" data-rule="required"  class="form-control" name="row[user_id]" type="text" value="{$row.user_id|htmlentities}" disabled>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('User.phone')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-phone" data-rule="required"  class="form-control" name="row[phone]" type="text" value="{$user.phone|htmlentities}" disabled>
+        </div>
+    </div>
+    
+    
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">商品名称:</label>
+        <div class="col-xs-12 col-sm-8">
+
+            <select id="c-p_id" data-rule="required" class="form-control selectpicker" name="row[p_id]"> 
+                {foreach name="productList" item="vo"}
+                <option value="{$vo.id}" {in name="vo.id" value="$row.p_id"}selected{/in}>{$vo.code}/{$vo.title}</option>
+                {/foreach}
+            </select>            
+           
+        </div>
+    </div>
+    
+    
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('O_style')}:</label>
+        <div class="col-xs-12 col-sm-8">
+        	<select id="c-o_style" data-rule="required" class="form-control selectpicker" name="row[c-o_style]">
+                <option value="0" {in name="0" value="$row.o_style"}selected{/in}>买跌</option>
+                <option value="1" {in name="1" value="$row.o_style"}selected{/in}>买涨</option>
+            </select>
+            
+        </div>
+    </div>
+   
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Buy_money')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-buy_money" class="form-control" step="0.01" name="row[buy_money]" type="number" value="{$row.buy_money|htmlentities}">
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Buy_price')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-buy_price" class="form-control" step="0.000001" name="row[buy_price]" type="number" value="{$row.buy_price|htmlentities}">
+        </div>
+    </div>
+    
+    
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Sell_price')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-sell_price" class="form-control" step="0.000001" name="row[sell_price]" type="number" value="{$row.sell_price|htmlentities}">
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Buy_time')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-buy_time" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[buy_time]" type="text" value="{$row.buy_time}" disabled>
+        </div>
+    </div>
+    
+    
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Sell_time')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-sell_time" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[sell_time]" type="text" value="{$row.sell_time}" disabled>
+        </div>
+    </div>
+    
+
+    
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Ploss')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-ploss" class="form-control" name="row[ploss]" type="number" value="{$row.ploss|htmlentities}" disabled>
+        </div>
+    </div>
+	<!-- 
+	<div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('O_status')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <select id="c-o_status" data-rule="required" class="form-control selectpicker" name="row[o_status]">
+                <option value="0" {in name="0" value="$row.o_status"}selected{/in}>默认</option>
+                <option value="1" {in name="1" value="$row.o_status"}selected{/in}>赢</option>
+                <option value="2" {in name="2" value="$row.o_status"}selected{/in}>亏</option>
+            </select>
+        </div>
+    </div> -->
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Status')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <select id="c-status" data-rule="required" class="form-control selectpicker" name="row[status]" disabled>
+                <option value="0" {in name="1" value="$row.status"}selected{/in}>建仓</option>
+                <option value="1" {in name="3" value="$row.status"}selected{/in}>已平仓</option>
+            </select>
+        </div>
+    </div>
+   
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

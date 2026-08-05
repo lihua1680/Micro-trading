@@ -1,0 +1,22 @@
+<div class="panel panel-default panel-intro">
+    {:build_heading()}
+
+    <div class="panel-body">
+        <div id="myTabContent" class="tab-content">
+            <div id="toolbar" class="toolbar">
+                <a href="javascript:;"  data-params="action=start" data-url="downmark/setVoice" class="btn btn-danger" id="auto_voice" data-status="{$voice}">关闭提示音</a>
+            </div>
+            <div class="tab-pane fade active in" id="one">
+                <div class="widget-body no-padding">
+                    
+                    <table id="table" class="table table-striped table-bordered table-hover table-nowrap"
+                    	   data-operate-check="{:$auth->check('downmark/check')}"
+                           data-operate-edit="{:$auth->check('downmark/edit')}"
+                           width="100%">
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

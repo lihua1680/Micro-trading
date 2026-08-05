@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover" />
+<title>{$site.web_name}</title>
+<link rel="stylesheet" href="__MB__/css/swiper.min.css" />
+<link rel="stylesheet" href="__MB__/lib/bootstrap.min.css" />
+<link rel="stylesheet" href="__MB__/lib/bootstrap-theme.min.css" />
+<link rel="stylesheet" href="__MB__/fonts/iconfont.css">
+<link rel="stylesheet" href="__MB__/css/common.css">
+<link rel="stylesheet" href="__MB__/css/index.css" />
+<link rel="stylesheet" href="__MB__/css/footer.css" />
+<link rel="stylesheet" href="__MB__/css/index_banner.css" />
+<link rel="stylesheet" href="__MB__/css/swiper.min.css">
+<script src="__MB__/js/swiper.min.js"></script>
+<style>
+    #home .trade{
+        padding: 0 13px;
+        background: transparent;
+    }
+    #home .trade ul li{
+        background: #fff;
+        padding: 10px 0;
+        border-radius: 5px;
+    }
+    .new-two-box{
+        padding: 5px 5%;
+    }
+    .news-two{
+        padding-bottom: 10px;
+    }
+    #home .trade{
+        margin-top: 10px;
+        margin-bottom: 0;
+    }
+    .nav-tabs>li>a:hover{
+        border: 0;
+    }
+    .nav>li>a{
+        font-size: 16px;
+    }
+    .nav>li>a:focus, .nav>li>a:hover{
+        border: 0;
+        background-color: transparent;
+    }
+    .nav-active a{
+        color:#588bf7 !important ;
+    }
+    .nav-active::after{
+        background:#588bf7 !important;
+    }
+    .performer-classify{
+        padding: 0 15px 3px;
+    }
+</style>
+{block name="addCss"}
+
+{/block}
+</head>
+<body>
+	<div id="home">
+		
+		{block name="content"}
+	    
+	    {/block}
+		
+	
+	
+	
+	<footer>
+            <a href="index.html" {if condition="$current eq 'index'"}class="select"{/if}>
+                <div>
+                    <p class="img img0"></p>
+                    <span data-localize="footer.home">首页</span>
+                </div>
+            </a>
+            
+            <a href="{:url('index/market')}" {if condition="$current eq 'market'"}class="select"{/if}>
+                <div>
+                    <p class="img img1"></p>
+                    <span data-localize="footer.quotation">行情</span>
+                </div>
+            </a>
+             <a href="{:url('index/trades')}"  {if condition="$current eq 'trades'"}class="select"{/if}>
+                <div>
+                    <p class="img img2"></p>
+                    <span data-localize="footer.transaction">交易</span>
+                </div>
+            </a>
+            <a href="{:url('index/wallet')}"  {if condition="$current eq 'wallet'"}class="select"{/if}>
+                <div>
+                    <p class="img img3"></p>
+                    <span data-localize="footer.assets">资产</span>
+                </div>
+            </a>
+            <a href="{:url('index/user')}"  {if condition="$current eq 'user'"}class="select"{/if}>
+                <div>
+                    <p class="img img4"></p>
+                    <span data-localize="footer.personal">我的</span>
+                </div>
+            </a>
+        </footer>
+
+	</div>
+	<script type="text/javascript" src="__MB__/lib/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="__MB__/javascripts/iSliders.js"></script>
+	<script type="text/javascript" src="__MB__/javascripts/islider_desktop.js"></script>
+	<script type="text/javascript" src="__MB__/lib/bootstrap.min.js"></script>
+	<script type="text/javascript" src="__MB__/lib/jquery.bootstrap.newsbox.min.js"></script>
+	<script type="text/javascript" src="__MB__/javascripts/swiper.min.js"></script>
+	<script type="text/javascript" src="__MB__/javascripts/jquery.cookie.js"></script>
+	<script type="text/javascript" src="__MB__/lib/layer_mobile/layer.js"></script>
+	<script type="text/javascript" src="__MB__/lib/jquery.localize.min.js"></script>
+	<script type="text/javascript" src="__MB__/lib/language_cookie.js"></script>
+	<script type="text/javascript" src="__MB__/javascripts/main.js"></script>
+	
+	
+	<script>
+        if (getLocal('language') && getLocal('language') == 'en') {
+            $('.langs .logos').attr('src', 'images/en.png');
+        } else if(getLocal('language') && getLocal('language') == 'hk'){
+            
+            $('.langs .logos').attr('src', 'images/hk.png');
+        }else{
+        	$('.langs .logos').attr('src', 'images/cn.png');
+        }
+        var picList = [];
+
+        $(".demos").bootstrapNews({
+            newsPerPage: 1,
+            autoplay: true,
+            pauseOnHover: true,
+            navigation: false,
+            direction: 'down',
+            newsTickerInterval: 2500,
+            onToDo: function () {}
+        });
+    </script>
+	{block name="addJs"}
+	    
+	{/block}
+</body>
+</html>

@@ -1,0 +1,471 @@
+{extend name="public/layout" /}
+
+{block name="addCss"}
+<style>
+    body{
+        background: #f7f7fa;
+    }
+    .header-title{
+        font-size: 18px;
+        font-weight: bold;
+        padding: 13px 0;
+        text-align: center;
+        background: #fff;
+        width: 100%;
+    }
+    .btmline{
+        border-bottom: 1px solid #eee;
+    }
+    .blue{
+        text-align: center;
+        width: 100%;
+        background: #588bf7;
+        height: 150px;
+        color: #fff;
+    }
+    .blue article{
+        padding-top: 50px;
+    }
+    .blue article span{
+        display: block;
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    .sfk article{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    .sfk{
+        padding: 15px 5%;
+        background: #fff;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .sfk span{
+        color: #666;
+        font-size: 16px;
+    }
+    .sfk-left{
+        margin-right: 20px;
+        width: 20px;
+        height: 20px;
+    }
+    .sfk-right{
+        width: 15px;
+        height: 18px;
+    }
+    .withdraw{
+        background: #fff;
+        margin: 10px 0;
+    }
+    .withdraw-tip{
+        padding: 10px 5%;
+    }
+    .withdraw-input span{
+        color: #666;
+        font-size: 24px;
+    }
+    .withdraw-input{
+        font-size: 20px;
+        padding: 10px 5%;
+        border-bottom: 1px solid #eee;
+    }
+    .dlmm-mm{
+        border-bottom: 1px solid #eee;
+    display: flex;
+    flex-direction: row;
+    padding: 10px 5%;
+    align-items: center;
+    }
+    .dlmm-mm input {
+        width: 80%;
+    }
+    .dlmm-mm article img {
+         width: 25px;
+        height: 25px;
+    }
+    .dlmm-mm article {
+        border-radius: 5px;
+        display: flex;
+        flex-direction: row;
+        padding: 10px 3%;
+        width: 70%;
+        background: #f7f7fa;
+        margin-left: 5%;
+    }
+    .dlmm-mm span {
+        font-size: 16px;
+        width: 25%;
+    }
+    .withdraw-input input{
+        color: #999;
+    }
+    .withdraw-fee{
+        padding: 0px 5%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        color: #8d9dbc;
+    }
+    .dlbtn button {
+        background: #588bf7;
+        width: 60%;
+        border-radius: 20px;
+        color: #fff;
+        font-size: 16px;
+        padding: 10px 0;
+        display: block;
+        border: 0;
+        margin: 30px auto;
+        text-align: center;
+    }
+    .currencymask{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+    }
+    .currencymask-box span{
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 15px 0;
+        background: #fff;
+        border-bottom: 1px solid #eee;
+    }
+    .currencymask-box{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+    }
+    .currencymask-box em{
+        background: #ddd;
+        width: 100%;
+        height: 10px;
+        display: block;
+    }
+    .header-right {
+        position: absolute;
+        top: 12px;
+        right: 6%;
+    }
+.save button{
+	        border-radius: 30px;
+	        background: #588bf7;
+	    }
+	    .receivables input{
+	        border-radius: 5px;
+	        padding: 10px 5%;
+	        background: #f7f7fa;
+	        line-height: inherit;
+	    }
+	    .receivables .title{
+	        margin: 0;
+	        width: 25%;
+	    }
+	    .receivables{
+	        margin-top: 5px;
+	        background: #fff;
+	    }
+	    .receivables li{
+	        display: flex;
+	        flex-direction: row;
+	        align-items: center;
+	        padding: 10px 5%;
+	        
+            border-bottom: 1px solid #eee;
+	    }
+	    .receivables div{
+	        width: 75%;
+	        line-height: inherit;
+	        margin-top: 0;
+            margin-bottom: 0;
+	    }
+		
+  </style>
+{/block}
+
+{block name="content"}
+<div id="app" v-cloak>
+	 <div class="bgfff btmline">
+    <a class="back" href="javascript:history.go(-1)">
+		
+	</a>
+    <div class="header-title" data-localize="zdy.txsq">提现申请</div>
+    <a href="{:url('user/withdraw_record')}" class="header-right" data-localize="zdy.txjl">提现记录</a>
+   </div>
+   <div class="blue">
+       <article>
+       <span id="m_0" class="m_span">{$user.money}</span><span id="m_1" class="m_span" style="display:none !important">{$user.usdt}</span>
+       <aside data-localize="zdy.dqye">当前余额</aside>
+       </article>
+   </div>
+   <div></div>
+   
+   <div class="sfk mb10" @click="tabmask()">
+       <article>
+       <img class="sfk-left" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACkAAAAsCAYAAAD4rZFFAAAEHUlEQVRYR+2YW2gcVRjH///ZTWsvUfvShz6IBZEi8QKWQhWkCV4KikSkFbSh3Ukz2/RBNN3d1hezIqJ2VoIUozNrJuslQg2oNEjpQ4wgVLB5SC30yYe8Cb6oTao13Tmf7Eyy3TS7mznJRpDuPM3M+S6/8z9zvjPnEBWXmXGfhaBfgDYC6yrbqtx/49nWc8vYBM1m2v0aQGc9WwHmCP7si8p+kkt+W2nLhYfujNOpFL8iUX73X0JW5FIUo3Mod3hs4V0ZyEw5l0C2QTAL4nNQrtWDpPDSkG15UZTsTrumUO6vq6RwA4EuABshctHLJR9aCpl2fIAGwPc8uycVJXmjbRIp532SL0PgezkrXgXSleClMOvlet5oNECUeGY6/zYgJ0q2nm2VR/nGcKebkFGERFPJSDJFMLq1lNyTzca3X93WT5G5uzb/+lY2m1X1RLIsp6V4O98EGY//qV5z3eT1WvYNUzKRyneQMj6f6NOZ6TvN0dH9frXEAeAdPA0gXD4pHd7J5MRqIA+VnBUwVbCtqVqBXjwxuOW2YvwnEPcEZRVyenZ6y0s3g+7b92Vs891/jHIeUEQuz/2zaffIqQNXasU+eGzw4ZgRD1Ymz7YKS4p5hO+6bGJmTm2DWj8B4t5qoCHg7yMEXwjaRS4Xodo/y/X+ppNnVZAl51qgpbZGAgZfyUp6tuDTlfpwaxzGBMn7FhQNgzZGwRUraWaGWiHF3QpilIIYiG0VyCCBTZUdFuAqwaMKfjDEAqoY4z96J7tndIXRVjKRdscJdOgmCu1l3LOTj+v6akOaafccgCd1E4WMOOflrL26vtqQluVs9Ftlp89wuMvfDY1dBN8NYeRVBbWojMWEKjbDSddN/rXmkLUSHEp/tNeAcbbUrsRvL+R6v9eFqWWvreT/ArIrld/eQnkGIrFFs5ncQSAZKAn5wBD8sqhDpK9i/ljhnd5pXYW1lTTT+QuA7NRNFM4bXBi2rV26vtqQ3al8QSgHdRPN2xc820ro+t7Y4xxzjwTOSk16A0cm6wUqrTQxqsWzG+vaCfkiDKGeh+Gfr4zhi6GWW7sTfe4jJB4QwygO24c/LleOhRtzlRuxRsxuM+MMQPgKgGuebW1oQq60Tq65kmbGaYfwu7AEFR8r2Ed/0J0gaw4ZbhUwIEJpuSJ99fYyteDXHFJXtWr2TchGqFiKEUHJ8OhPgIFh2+prVGKdOGbGdSHoKZ2RejmrdWmdTDlTIB8Ukb9BY4RUs/US6ByiJlJOkgZ21AdmK5QcALkegvNeznp0CWT3cedpUTwTbFuiXRpn5vmzgET9Iy+K8KnhXE9QzkrXoh+M0tJGGP0UtIEon7RWZ5Yxz07uj9KfRMo5Q/KJZWyvQ3ARhrx+8ymH9l9QFKhG2zQhG6VoU8lbSsl/AcFNXUtA5q+PAAAAAElFTkSuQmCC">
+       <span>{{currency_name}}</span>
+       </article>
+       <img class="sfk-right" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAbCAYAAAB1NA+iAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjQ3RkRGRDFEOUY4RjExRThBNkU3QTI1NkQ5NEI4ODM4IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjQ3RkRGRDFFOUY4RjExRThBNkU3QTI1NkQ5NEI4ODM4Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NDdGREZEMUI5RjhGMTFFOEE2RTdBMjU2RDk0Qjg4MzgiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NDdGREZEMUM5RjhGMTFFOEE2RTdBMjU2RDk0Qjg4MzgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5NrS4lAAAA1klEQVR42qTTMQrCMBQG4PKjd+gBXFy9gY5OgpPeQPA4Qo/gouDk6NpFnB08gHfo4v8ggVDa5L1n4KdN6f9B02TSts+Ko2Ya5sB8K8NAKD+YTbjWVmDBzMJ8bkUEuDM7pvMgCNerF0Fy70LQm5sRDDwzIRiB1Qgyn6dCUFhkQfY5BIpffckhUG64UQSGbS/IKZkL0liALXNM5m85vTCUz8w0KS/l6OOfsmYRs+USUCznAFV5DFCXhwBTuQ+YyyngKkdg7S1H4MV8POUIyMsr5mYty/gJMAAC2U6TBgl8lQAAAABJRU5ErkJggg==">
+   </div>
+   
+   <div class="sfk jump"  v-show="currency_name == '银行卡'" data-href="{:url('user/withdraw_account')}">
+       <article>
+	       <img  class="sfk-left" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACkAAAAsCAYAAAD4rZFFAAAEHUlEQVRYR+2YW2gcVRjH///ZTWsvUfvShz6IBZEi8QKWQhWkCV4KikSkFbSh3Ukz2/RBNN3d1hezIqJ2VoIUozNrJuslQg2oNEjpQ4wgVLB5SC30yYe8Cb6oTao13Tmf7Eyy3TS7mznJRpDuPM3M+S6/8z9zvjPnEBWXmXGfhaBfgDYC6yrbqtx/49nWc8vYBM1m2v0aQGc9WwHmCP7si8p+kkt+W2nLhYfujNOpFL8iUX73X0JW5FIUo3Mod3hs4V0ZyEw5l0C2QTAL4nNQrtWDpPDSkG15UZTsTrumUO6vq6RwA4EuABshctHLJR9aCpl2fIAGwPc8uycVJXmjbRIp532SL0PgezkrXgXSleClMOvlet5oNECUeGY6/zYgJ0q2nm2VR/nGcKebkFGERFPJSDJFMLq1lNyTzca3X93WT5G5uzb/+lY2m1X1RLIsp6V4O98EGY//qV5z3eT1WvYNUzKRyneQMj6f6NOZ6TvN0dH9frXEAeAdPA0gXD4pHd7J5MRqIA+VnBUwVbCtqVqBXjwxuOW2YvwnEPcEZRVyenZ6y0s3g+7b92Vs891/jHIeUEQuz/2zaffIqQNXasU+eGzw4ZgRD1Ymz7YKS4p5hO+6bGJmTm2DWj8B4t5qoCHg7yMEXwjaRS4Xodo/y/X+ppNnVZAl51qgpbZGAgZfyUp6tuDTlfpwaxzGBMn7FhQNgzZGwRUraWaGWiHF3QpilIIYiG0VyCCBTZUdFuAqwaMKfjDEAqoY4z96J7tndIXRVjKRdscJdOgmCu1l3LOTj+v6akOaafccgCd1E4WMOOflrL26vtqQluVs9Ftlp89wuMvfDY1dBN8NYeRVBbWojMWEKjbDSddN/rXmkLUSHEp/tNeAcbbUrsRvL+R6v9eFqWWvreT/ArIrld/eQnkGIrFFs5ncQSAZKAn5wBD8sqhDpK9i/ljhnd5pXYW1lTTT+QuA7NRNFM4bXBi2rV26vtqQ3al8QSgHdRPN2xc820ro+t7Y4xxzjwTOSk16A0cm6wUqrTQxqsWzG+vaCfkiDKGeh+Gfr4zhi6GWW7sTfe4jJB4QwygO24c/LleOhRtzlRuxRsxuM+MMQPgKgGuebW1oQq60Tq65kmbGaYfwu7AEFR8r2Ed/0J0gaw4ZbhUwIEJpuSJ99fYyteDXHFJXtWr2TchGqFiKEUHJ8OhPgIFh2+prVGKdOGbGdSHoKZ2RejmrdWmdTDlTIB8Ukb9BY4RUs/US6ByiJlJOkgZ21AdmK5QcALkegvNeznp0CWT3cedpUTwTbFuiXRpn5vmzgET9Iy+K8KnhXE9QzkrXoh+M0tJGGP0UtIEon7RWZ5Yxz07uj9KfRMo5Q/KJZWyvQ3ARhrx+8ymH9l9QFKhG2zQhG6VoU8lbSsl/AcFNXUtA5q+PAAAAAElFTkSuQmCC">
+	       <span id="bankno" style="display:none"><span v-if="!bank" data-localize="zdy.xzskfs">选择收款方式</span></span>
+	       <span id="bankok" style="display:none"><span v-if="bank">{{bank.account}}</span></span>
+       </article>
+       <img class="sfk-right" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAbCAYAAAB1NA+iAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjQ3RkRGRDFEOUY4RjExRThBNkU3QTI1NkQ5NEI4ODM4IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjQ3RkRGRDFFOUY4RjExRThBNkU3QTI1NkQ5NEI4ODM4Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NDdGREZEMUI5RjhGMTFFOEE2RTdBMjU2RDk0Qjg4MzgiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NDdGREZEMUM5RjhGMTFFOEE2RTdBMjU2RDk0Qjg4MzgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5NrS4lAAAA1klEQVR42qTTMQrCMBQG4PKjd+gBXFy9gY5OgpPeQPA4Qo/gouDk6NpFnB08gHfo4v8ggVDa5L1n4KdN6f9B02TSts+Ko2Ya5sB8K8NAKD+YTbjWVmDBzMJ8bkUEuDM7pvMgCNerF0Fy70LQm5sRDDwzIRiB1Qgyn6dCUFhkQfY5BIpffckhUG64UQSGbS/IKZkL0liALXNM5m85vTCUz8w0KS/l6OOfsmYRs+USUCznAFV5DFCXhwBTuQ+YyyngKkdg7S1H4MV8POUIyMsr5mYty/gJMAAC2U6TBgl8lQAAAABJRU5ErkJggg==">
+   </div>
+   <div class="withdraw">
+   
+       <div class="withdraw-tip">提现{{currency_name}}</div>
+	   <div class="withdraw-input" v-show="currency_name == 'USDT'">
+	       <input type="text" v-model="address" id="address" placeholder="请输入提币地址" data-localize="ads.tas">
+	   </div>
+
+
+	   <div class="withdraw-input">
+	       <span><span>{{currencyIndex==0?'￥':'$'}}</span></span>
+	       <input type="number" v-model="amount" @input="enteramount()" placeholder="" data-localize="contract.minimum">
+	   </div>
+	   {if condition="$mpsswd_show eq '1'"}
+	   <div class="dlmm-mm" id="pwd_box">
+	       <span data-localize="zdy.txmm">提现密码</span> 
+	       <article><input placeholder="请输入密码"  data-localize="safe.ppwd" :type="eyeIndex==0?'password':'text'" v-model="password"> 
+	       <img src="__MB__/images/eye_no.png" :src="eye[eyeIndex]" @click="eyetab()"></article>
+	    </div>
+	   {/if}
+   </div>
+   <div class="withdraw-fee">
+       <span class="show_box" style="display:none"><span data-localize="deals.fee">手续费</span>:{:config('site.tx_fee_rate')}%</span>
+       <span class="show_box" style="display:none"><em><em data-localize="zdy.sjdz">实际到账</em>:{{daozhang}}</em></span>
+   </div>
+   <div class="dlbtn"><button id="withdraw_btn" data-localize="zdy.ljtx" @click="submit()">立即提现</button></div>
+ 
+   <div class="currencymask" v-show="currencybool">
+       <div class="currencymask-box">
+           <span v-for="(item,index) in list"  @click="tabmenu(index)">{{item.symbol}}</span>
+           <em></em>
+           <span @click="tabmask()" data-localize="transaction.cancel">取消</span>
+       </div>
+   </div>
+</div>   
+{/block}
+
+{block name="footer"}{/block}
+
+{block name="addJs"}
+<script type="text/javascript" src="__MB__/lib/vue.min.js"></script>
+<script>
+   
+   var page = new Vue({
+       el:"#app",
+       data:{
+           eye:['__MB__/images/eye_no.png','__MB__/images/eye.png'],
+           eyeIndex:0,
+           coin:'',
+           bank:'',
+           address:'',
+           password:'',
+           amount:'',
+           address:'',
+           fee_rate:{:config('site.tx_fee_rate')},
+           daozhang:0,
+           currencybool:false,
+           currencyIndex:0,
+           list:[],
+           balance:{$user.money},
+           currency_name:'CNY',
+       },
+       filters: {
+           toFixeds(val){
+             var vals = iTofixed(val,0);
+	         return vals;
+           },
+           toFixedstwo(val){
+             var vals = iTofixed(val,8);
+	         return vals;
+           },
+       },
+       mounted(){
+           let that=this;
+           this.getCashInfo();
+       },
+       
+       methods:{
+           submit(){
+        	   
+               var data={};
+               let that=this;
+               let daozhang = parseFloat(that.daozhang);
+               let amount = parseFloat(that.amount);
+               let address = parseFloat(that.address);
+
+               if(that.currency_name=='银行卡'){
+            	   
+            	   if(that.bank==''){
+                       layer.msg(getlg('txskfs'));
+                       return;
+                   }
+
+                  if(!that.password && $('#pwd_box').length>0){
+                    layer.msg(getlg('pinpwd'));
+                    return;
+                  }
+                  
+                  if(that.daozhang<=0){
+                    layer.msg(getlg('sjdzje'));
+                    return;
+                  }
+                  
+                  data = {
+                	request:'downmark',
+                    money:amount,
+                    mpwd:that.password,
+                	save:$("#save").val()
+                  }
+              }  
+               
+               if(that.currency_name=='USDT'){
+				   
+            	   if(that.address<=0){
+                       layer.msg(getlg('withdrawalAddress'));
+                       return;
+                     }
+
+                   if(!that.password && $('#pwd_box').length>0){
+                     layer.msg(getlg('pinpwd'));
+                     return;
+                   }
+                   
+                   if(that.daozhang <= 0){
+                     layer.msg(getlg('sjdzje'));
+                     return;
+                   }
+                   
+                   data = {
+                   	  request:'coin_downmark',
+                       money:amount,
+                       address:that.address,
+                       mpwd:that.password,
+                   	   save:$("#save").val()
+                     }
+                 }  
+
+              if (amount > that.balance) {
+            	  layer.msg(getlg('runningLow'));
+                  return;
+              }
+             
+             
+              $("#withdraw_btn").attr('disabled', true);
+              $("#withdraw_btn").text('提交中');
+              layer.load(1);
+              initDatas({
+                    url: 'user/ajax',
+                    type: 'post',
+                    data: data
+                }, function (res) {
+                	$("#withdraw_btn").attr('disabled', false);
+                	$("#withdraw_btn").text('立即提现');
+                	layer.closeAll();
+                    if (res.status) {
+                    	that.balance = that.balance-amount;
+                    	layer_msg(res.msg);
+                    	setTimeout(() => {
+                            window.location.href = '{:url("user/withdraw_record")}';
+                        }, 1500);
+                    } else {
+                    	var msg = getlg(res.msg) ? getlg(res.msg) : res.msg;
+                    	layer_msg(msg);  
+                    }
+                });
+           },
+           getCashInfo(){
+                let that=this;
+	            initDatas({
+	                type:"post",
+	                url:"user/ajax",
+	                data:{
+	                	request:'cash_info',
+	                	type:0
+	                }
+	            },function(res){
+	                if(res.status){
+	                	var data = res.data;
+
+	                	if (data.list) {
+	                		
+	                		for (var i = 0; i < data.list.length; i++) {
+	                			if (i == 0) {
+	                				that.currency_name = data.list[i]['symbol'];
+	                			}
+	                            that.list[i] = data.list[i];
+	                        }
+	                	}
+	                	if (data.coin) {
+	                		that.coin = data.coin.account;
+	                	}
+	                	if (data.bank) {
+	                		that.bank = data.bank;
+	                		that.bank.account = data.bank.account.substr(0,4)+' **** **** ***'+data.bank.account.substr(data.bank.account.length-4);
+	                		$("#bankok").show();
+	                	} else {
+	                		$("#bankno").show();
+	                	}
+	                    $(".show_box").show();
+						/* if (Object.keys(data).length > 0) {
+							$("#name").val(data.user_name);
+							$("#yinhang").attr("value", data.bank_name);
+							$("#yinHu").attr("value", data.account);
+							$("#bank_branch").attr("value", data.bank_branch);
+							$("#yinhang").attr("value", data.bank_name);
+							$("#bank_box input").attr('disabled', true);
+							$("#save").val(1);
+						} */
+	                	
+	                }
+	            });
+           },
+           adding(){
+             
+           },
+            eyetab(){
+                this.eyeIndex==1?this.eyeIndex=0:this.eyeIndex=1;   
+           },
+           enteramount(){
+        	    var dz = this.amount * (100 - this.fee_rate) / 100;
+                this.daozhang = dz.toFixed(2);
+           },
+           tabmask(){
+             this.currencybool=!this.currencybool;  
+           },
+           tabmenu(i){
+               
+               this.daozhang = 0;
+               this.amount='';
+               this.bankId='';
+               this.address= this.coin;
+               if (this.coin) {
+            	   $("#address").attr('disabled', true);
+               }
+               this.password=''
+               this.currencybool=!this.currencybool;  
+               this.currencyIndex=i;
+               this.currency_name= this.list[i].symbol;
+               this.balance = this.list[i].balance;
+               $(".m_span").hide();
+               $("#m_"+i).show();
+           }
+       },
+   })
+  </script>
+{/block}

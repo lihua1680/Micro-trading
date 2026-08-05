@@ -1,0 +1,438 @@
+{extend name="public/layout" /}
+
+{block name="addCss"}
+<!--<link rel="stylesheet" type="text/css" href="__MB__/css/elementIndex.css" />-->
+	<style>
+		
+		
+		
+		
+		
+		/*��������ʾ����,���ܿ����á�Դ������Ψһ��ַ: http://www.bootstrapmb.com/item/9294��(�����ע������ʾҳ���У�Դ������û�С�)*/@charset "utf-8";
+/** Function Definitions **/
+/** Basic Styles **/
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 62.5%;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1;
+  color: #32e1af;
+  background: #000;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+/** Speedometer Styles **/
+.speedometer-container {
+  width: 48rem;
+  height: 48rem;
+  position: relative;
+  background-color: #000;
+  box-shadow: 0 0 10rem rgba(0,0,0,0.75);
+}
+.speedometer-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(circle at top left, #fff, transparent);
+  opacity: 0.12;
+}
+.overlay {
+  pointer-events: none;
+}
+.overlay::before,
+.overlay::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.overlay::before {
+  background-image: radial-gradient(circle at top left, #25fabb, transparent);
+  opacity: 0.04;
+}
+.overlay::after {
+  background-image: radial-gradient(circle at bottom right, #874bd7, transparent);
+  opacity: 0.2;
+}
+.speedometer .inner-ring {
+  width: 21rem;
+  height: 21rem;
+  position: absolute;
+  top: calc(50% - 12.5rem);
+  left: calc(50% - 10.5rem);
+}
+.speedometer .inner-ring::before,
+.speedometer .inner-ring::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 3px solid transparent;
+  border-top: 3px solid #3b3d45;
+  border-right: 3px solid #3b3d45;
+  border-radius: 50%;
+}
+.speedometer .inner-ring::before {
+  -webkit-transform: rotate(-75deg);
+          transform: rotate(-75deg);
+}
+.speedometer .inner-ring::after {
+  -webkit-transform: rotate(-15deg);
+          transform: rotate(-15deg);
+}
+.speedometer .outer-ring {
+  width: 32rem;
+  height: 32rem;
+  position: absolute;
+  top: calc(50% - 18rem);
+  left: calc(50% - 16rem);
+  border-radius: 50%;
+}
+.speedometer .digit-ring {
+  position: absolute;
+  top: calc(50% - 2rem);
+  left: 50%;
+}
+.speedometer .tick {
+  width: 0.8rem;
+  border-top: 2px solid #3b3d45;
+  position: absolute;
+  top: calc(50% - 0.1rem);
+  left: calc(50% - 0.4rem);
+}
+.speedometer .tick:nth-child(6n+1) {
+  width: 1.6rem;
+  left: calc(50% - 0.8rem);
+  border-color: #31e1b0;
+}
+.speedometer .digit {
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  top: calc(50% - 1rem);
+  left: calc(50% - 1rem);
+  font-weight: bold;
+  text-align: center;
+  line-height: 2rem;
+  
+}
+.speedometer .details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 21rem;
+  height: 21rem;
+  position: absolute;
+  top: calc(50% - 14rem);
+  left: calc(50% - 10.5rem);
+}
+.speedometer .label {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #32e1af;
+  text-transform: uppercase;
+}
+.speedometer .speed {
+  font-size: 6rem;
+  color: #fff;
+}
+.speedometer .unit {
+  font-size: 1.6rem;
+  margin: 0.4rem 0;
+}
+.speedometer .progress {
+  width: 21rem;
+  height: 21rem;
+  position: absolute;
+  top: calc(50% - 12.5rem);
+  left: calc(50% - 10.5rem);
+  border-radius: 50%;
+  background: none;
+}
+.speedometer .progress::before {
+  content: "";
+  position: absolute;
+  top: -0.2rem;
+  left: calc(50% - 0.3rem);
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background-color: #f1252e;
+  box-shadow: 0 0 6rem 2rem rgba(241,37,46,0.35);
+}
+.speedometer .retry-button {
+  width: 10rem;
+  border: 2px solid #3b3d45;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  position: absolute;
+  left: calc(50% - 5rem);
+  bottom: 13.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  line-height: 3rem;
+  color: #666;
+  border-radius: 3rem;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 250ms ease-out;
+}
+.speedometer .retry-button:hover,
+.speedometer .retry-button:focus {
+  background-color: rgba(59,61,69,0.15);
+}
+.speedometer footer {
+  display: flex;
+  justify-content: center;
+  padding: 3.5rem 0;
+  position: absolute;
+  top: auto;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.speedometer .stat {
+  flex-grow: 1;
+  width: 0;
+  padding: 1rem 0;
+  text-align: center;
+}
+.speedometer .stat:not(:last-child) {
+  border-right: 2px solid rgba(255,255,255,0.05);
+}
+.speedometer .stat label {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.speedometer .stat p {
+  font-size: 1.4rem;
+  color: #fff;
+}
+/*��������ʾ����,���ܿ����á�Դ������Ψһ��ַ: http://www.bootstrapmb.com/item/9294��(�����ע������ʾҳ���У�Դ������û�С�)*/
+
+	</style>
+{/block}
+
+{block name="content"}
+	 <header class="header">
+		<a class="back" href="javascript:history.go(-1)">
+		</a>
+		<h4 class="ft16">信誉分</h4>
+	</header>
+    <div style="background-color:#000">
+        
+        
+<div class="speedometer">
+<div class="inner-ring"></div>
+<div class="outer-ring">
+
+<span class="tick" style="transform: translate(-145.492px, 84px) rotate(-210deg);"></span>
+<span class="tick" style="transform: translate(-148.634px, 69.3094px) rotate(-205deg);"></span>
+<span class="tick" style="transform: translate(-154.11px, 56.0913px) rotate(-200deg);"></span>
+<span class="tick" style="transform: translate(-158.412px, 42.4463px) rotate(-195deg);"></span>
+<span class="tick" style="transform: translate(-161.508px, 28.4783px) rotate(-190deg);"></span>
+<span class="tick" style="transform: translate(-163.376px, 14.2935px) rotate(-185deg);"></span>
+<span class="tick" style="transform: translate(-168px, -2.05741e-14px) rotate(-180deg);"></span>
+<span class="tick" style="transform: translate(-163.376px, -14.2935px) rotate(-175deg);"></span>
+<span class="tick" style="transform: translate(-161.508px, -28.4783px) rotate(-170deg);"></span>
+<span class="tick" style="transform: translate(-158.412px, -42.4463px) rotate(-165deg);"></span>
+<span class="tick" style="transform: translate(-154.11px, -56.0913px) rotate(-160deg);"></span>
+<span class="tick" style="transform: translate(-148.634px, -69.3094px) rotate(-155deg);"></span>
+<span class="tick" style="transform: translate(-145.492px, -84px) rotate(-150deg);"></span>
+<span class="tick" style="transform: translate(-134.341px, -94.0665px) rotate(-145deg);"></span>
+<span class="tick" style="transform: translate(-125.631px, -105.417px) rotate(-140deg);"></span>
+<span class="tick" style="transform: translate(-115.966px, -115.966px) rotate(-135deg);"></span>
+<span class="tick" style="transform: translate(-105.417px, -125.631px) rotate(-130deg);"></span>
+<span class="tick" style="transform: translate(-94.0665px, -134.341px) rotate(-125deg);"></span>
+<span class="tick" style="transform: translate(-84px, -145.492px) rotate(-120deg);"></span>
+<span class="tick" style="transform: translate(-69.3094px, -148.634px) rotate(-115deg);"></span>
+<span class="tick" style="transform: translate(-56.0913px, -154.11px) rotate(-110deg);"></span>
+<span class="tick" style="transform: translate(-42.4463px, -158.412px) rotate(-105deg);"></span>
+<span class="tick" style="transform: translate(-28.4783px, -161.508px) rotate(-100deg);"></span>
+<span class="tick" style="transform: translate(-14.2935px, -163.376px) rotate(-95deg);"></span>
+<span class="tick" style="transform: translate(1.0287e-14px, -168px) rotate(-90deg);"></span>
+<span class="tick" style="transform: translate(14.2935px, -163.376px) rotate(-85deg);"></span>
+<span class="tick" style="transform: translate(28.4783px, -161.508px) rotate(-80deg);"></span>
+<span class="tick" style="transform: translate(42.4463px, -158.412px) rotate(-75deg);"></span>
+<span class="tick" style="transform: translate(56.0913px, -154.11px) rotate(-70deg);"></span>
+<span class="tick" style="transform: translate(69.3094px, -148.634px) rotate(-65deg);"></span>
+<span class="tick" style="transform: translate(84px, -145.492px) rotate(-60deg);"></span>
+<span class="tick" style="transform: translate(94.0665px, -134.341px) rotate(-55deg);"></span>
+<span class="tick" style="transform: translate(105.417px, -125.631px) rotate(-50deg);"></span>
+<span class="tick" style="transform: translate(115.966px, -115.966px) rotate(-45deg);"></span>
+<span class="tick" style="transform: translate(125.631px, -105.417px) rotate(-40deg);"></span>
+<span class="tick" style="transform: translate(134.341px, -94.0665px) rotate(-35deg);"></span>
+<span class="tick" style="transform: translate(145.492px, -84px) rotate(-30deg);"></span>
+<span class="tick" style="transform: translate(148.634px, -69.3094px) rotate(-25deg);"></span>
+<span class="tick" style="transform: translate(154.11px, -56.0913px) rotate(-20deg);"></span>
+<span class="tick" style="transform: translate(158.412px, -42.4463px) rotate(-15deg);"></span>
+<span class="tick" style="transform: translate(161.508px, -28.4783px) rotate(-10deg);"></span>
+<span class="tick" style="transform: translate(163.376px, -14.2935px) rotate(-5deg);"></span>
+<span class="tick" style="transform: translate(168px, 0px) rotate(0deg);"></span>
+<span class="tick" style="transform: translate(163.376px, 14.2935px) rotate(5deg);"></span>
+<span class="tick" style="transform: translate(161.508px, 28.4783px) rotate(10deg);"></span>
+<span class="tick" style="transform: translate(158.412px, 42.4463px) rotate(15deg);"></span>
+<span class="tick" style="transform: translate(154.11px, 56.0913px) rotate(20deg);"></span>
+<span class="tick" style="transform: translate(148.634px, 69.3094px) rotate(25deg);"></span>
+<span class="tick" style="transform: translate(145.492px, 84px) rotate(30deg);"></span>
+<span class="tick" style="transform: translate(145.492px, -84px) rotate(-30deg);"></span>
+<span class="tick" style="transform: translate(148.634px, -69.3094px) rotate(-25deg);"></span>
+<span class="tick" style="transform: translate(154.11px, -56.0913px) rotate(-20deg);"></span>
+<span class="tick" style="transform: translate(158.412px, -42.4463px) rotate(-15deg);"></span>
+<span class="tick" style="transform: translate(161.508px, -28.4783px) rotate(-10deg);"></span>
+<span class="tick" style="transform: translate(163.376px, -14.2935px) rotate(-5deg);"></span>
+<span class="tick" style="transform: translate(168px, 0px) rotate(0deg);"></span>
+<span class="tick" style="transform: translate(163.376px, 14.2935px) rotate(5deg);"></span>
+<span class="tick" style="transform: translate(161.508px, 28.4783px) rotate(10deg);"></span>
+<span class="tick" style="transform: translate(158.412px, 42.4463px) rotate(15deg);"></span>
+<span class="tick" style="transform: translate(154.11px, 56.0913px) rotate(20deg);"></span>
+<span class="tick" style="transform: translate(148.634px, 69.3094px) rotate(25deg);"></span>
+
+
+</div>
+<div class="digit-ring">
+<span class="digit" style="transform: translate(-125.574px, 72.5px);">0</span>
+<span class="digit" style="transform: translate(-145px, -1.77574e-14px);">20</span>
+<span class="digit" style="transform: translate(-125.574px, -72.5px);">40</span>
+<span class="digit" style="transform: translate(-72.5px, -125.574px);">60</span>
+<span class="digit" style="transform: translate(8.87869e-15px, -145px);">80</span>
+<span class="digit" style="transform: translate(72.5px, -125.574px);">10</span>
+<!-- <span class="digit" style="transform: translate(125.574px, -72.5px);">120</span>
+<span class="digit" style="transform: translate(145px, 0px);">140</span>
+<span class="digit" style="transform: translate(125.574px, 72.5px);">160</span> -->
+</div>
+<div class="details">
+<p class="label">信誉评分</p>
+<p class="speed">0</p>
+<p class="unit" id="credit_text">信誉评分优秀</p>
+<p class="unit" id="credit_date">评估时间:2099.01.01</p>
+</div>
+<div class="progress" style="transform: rotate(10.95deg);"></div>
+</div>
+    </div>
+
+ 
+{/block}
+
+ 
+{block name="footer"}{/block}
+
+{block name="addJs"}
+ 
+<script type ="text/javascript">
+    var ticks = $('.tick');
+var digits = $('.digit');
+var details = $('.details');
+var progress = $('.progress');
+var outerRingRadius = 164;
+var digitRingRadius = 145;
+ticks.each(function(i) {
+    var angle = 210 - i * 4;
+    var theta = deg2rad(angle);
+    var radius = outerRingRadius + (i % 6 ? 0 : 4);
+    var x = Math.cos(theta) * radius;
+    var y = Math.sin(theta) * -radius;
+    var transform = [`translate(${x}px,${y}px)`, `rotate(${-angle}deg)`].join(' ');
+    $(this).css({
+        '-webkit-transform': transform,
+        '-moz-transform': transform,
+        'transform': transform
+    });
+});
+digits.each(function(i) {
+    var angle = 210 - i * 48;
+    var theta = deg2rad(angle);
+    var x = Math.cos(theta) * digitRingRadius;
+    var y = Math.sin(theta) * -digitRingRadius;
+    $(this).css({
+        '-webkit-transform': `translate(${x}px,${y}px)`,
+        '-moz-transform': `translate(${x}px,${y}px)`,
+        'transform': `translate(${x}px,${y}px)`
+    });
+});
+$('.retry-button').on('click', function() {
+    statValueCurrent = 0;
+    updateDetails();
+});
+var frameCount = 100;
+var frameInterval = 10;
+var digitValueMax = 100;
+var statValueMax = {$user.credit_score};
+var statValueCurrent = 0;
+var statValueInterval = statValueMax / frameCount;
+updateDetails();
+
+var credit_text = '信誉评分差'
+var date = new Date();
+var credit_date = date.getFullYear()+'.'+(date.getMonth() + 1)+'.'+date.getDate()
+if(statValueMax == 100){
+    credit_text = '信誉评分优秀'
+}else if(statValueMax >= 90 && statValueMax < 100){
+    credit_text = '信誉评分良好'
+}else if(statValueMax >= 60 && statValueMax < 90){
+    credit_text = '信誉评分一般'
+}
+
+$('#credit_text').html(credit_text)
+$('#credit_date').html('评分时间:'+credit_date)
+
+function updateDetails() {
+    if (statValueCurrent.toFixed(1) > statValueMax) {
+        return;
+    }
+    setStatValue(statValueCurrent.toFixed(0));
+    statValueCurrent += statValueInterval;
+    setTimeout(updateDetails, frameInterval);
+}
+
+function setStatValue(value) {
+    var angle = -120 + 240 * (value / digitValueMax);
+    progress.css({
+        'transform': `rotate(${angle}deg)`
+    });
+    details.find('.speed').text(value);
+}
+
+function deg2rad(angle) {
+    return angle * (Math.PI / 180);
+}
+
+function rad2deg(angle) {
+    return angle * (180 / Math.PI);
+}
+ </script>
+{/block}
+
+
+ 

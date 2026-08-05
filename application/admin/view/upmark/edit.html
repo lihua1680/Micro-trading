@@ -1,0 +1,116 @@
+<form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('User_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-user_id" data-rule="required" class="form-control" disabled value="{$row.user_id|htmlentities}" name="row[user_id]" cols="50">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Username')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-username" class="form-control" name="row[username]" type="text" disabled value="{$row.username|htmlentities}">
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Pay_type')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-pay_type" class="form-control " value="{$row.pay_type|htmlentities}" name="row[pay_type]" disabled>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">账号:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-pay_info" class="form-control " value="{$row.pay_info|htmlentities}" name="row[pay_info]" disabled>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Money')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-money" data-rule="required" class="form-control" name="row[money]" type="number" value="{$row.money|htmlentities}" disabled>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Remark')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea id="c-remark" class="form-control " rows="5" name="row[remark]" cols="50" disabled>{$row.remark|htmlentities}</textarea>
+        </div>
+    </div>
+     <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Agent')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-agent" class="form-control" name="row[agent]" type="text" value="{$row.agent|htmlentities}" disabled>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Time')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-time" data-rule="required" class="form-control datetimepicker" disabled data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[time]" type="text" value="{$row.time}">
+        </div>
+    </div>
+    
+    
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Status')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <select id="c-status" data-rule="required" class="form-control selectpicker" name="row[status]" {if condition="$row.status gt 0"} disabled {/if}>
+                
+                <option value="0" {in name="0" value="$row.status"}selected{/in}>未审核</option>
+                <option value="1" {in name="1" value="$row.status"}selected{/in}>审核通过</option>
+                <option value="2" {in name="2" value="$row.status"}selected{/in}>审核未通过</option>
+                
+            </select>
+        </div>
+    </div>
+    
+   <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Check_remark')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea id="c-check_remark" class="form-control " rows="5" name="row[check_remark]" cols="50" {if condition="$row.status gt 0"} disabled {/if}>{$row.check_remark|htmlentities}</textarea>
+        </div>
+    </div>
+   
+   {if condition="$row.status gt 0"}
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Check_account')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-check_account" class="form-control" name="row[check_account]" type="text" value="{$row.check_account|htmlentities}" disabled>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Check_time')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-check_time" class="form-control" name="row[check_time]" type="text" value="{$row.check_time}" disabled>
+        </div>
+    </div>
+    {if condition="$row.status eq 1"}
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Balance_before')}:</label> 
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-balance_before" class="form-control" name="row[balance_before]" type="text" value="{$row.balance_before|htmlentities}" disabled>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Balance_later')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-balance_later" class="form-control" name="row[balance_later]" type="text" value="{$row.balance_later|htmlentities}" disabled>
+        </div>
+    </div>
+    {/if}
+    {/if}
+    
+    {if condition="$row.status eq 0"}
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+    {/if}
+    
+</form>

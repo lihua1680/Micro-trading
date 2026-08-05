@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="__MB__/lib/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="__MB__/css/common.css" />
+    <style type="text/css">
+        .header{
+            border-bottom:0;
+        }
+        .czmm-title{
+            font-size: 18px;
+            padding: 40px 10% 20px
+        }
+        .czmm-account input{
+            margin-left: 10px;
+            width: 87%;
+        }
+        .czmm-account{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            border-radius: 30px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            padding: 10px 5%;
+            margin: 0 10% 20px;
+        }
+         .czmm-code input{
+            margin-left: 10px;
+            width: 44%;
+            flex-grow: 1;
+        }
+        .czmm-code a{
+            flex-grow: 1;
+            text-align: right;
+        }
+        .czmm-code{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            border-radius: 30px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            padding: 10px 5%;
+            margin: 0 10% 20px;
+        }
+        .czmm-yzm{
+            justify-content: space-around;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            border-radius: 30px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            padding: 10px 5%;
+            margin: 0 10% 20px;
+        }
+        .czmm-yzm button{
+            color: #3c0d75;
+            background: transparent;
+            border: 0;
+            
+        }
+        .czmm-yzm input{
+            /*width: 79%;*/
+            margin-left: 10px;
+        }
+         .icon-img{
+             width: 20px;
+             height: 20px;
+         }
+         .czmm-pwd{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            border-radius: 30px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            padding: 10px 5%;
+            margin: 0 10% 20px; 
+         }
+         .czmm-pwd input{
+             margin-left: 10px;
+             width: 83%;
+         }
+         .selected img {
+            width: 15px;
+            height: 15px;
+            margin-left: 5px;
+            margin-right: 5px;
+            position: relative;
+            top: 3px;
+        }
+
+        .selected p {
+            min-width: 40px;
+            text-align: center;
+            font-size: 14px;
+
+        }
+
+        .area-code {
+            width: 100.0vw;
+            background-color: #fff;
+            border: 1px solid #f1f1f1;
+            top: 40px;
+            position: absolute;
+            left: 0;
+            border-radius: 2px;
+            height: calc(100.0vh - 40px);
+            display: none;
+        }
+
+        .area-code li {
+            line-height: 40px;
+            text-align: center;
+            border-bottom: 1px solid #f1f1f1;
+            font-size: 14px !important;
+        }
+
+        .area-code li:last-child {
+            border: none;
+        }
+        .forget-btns{
+            display: block;
+            background: #588bf7;
+            color: #fff;
+            border-color: #588bf7;
+            width: 80%;
+            margin: 0 auto;
+            font-size: 16px;
+            border-radius: 30px;
+            height: 40px;
+            line-height: 40px;
+            border: none;
+            outline: none;
+            padding: 0;
+        }
+        .czmm-list{
+             font-size: 18px;
+            padding: 40px 10% 20px;
+            margin-bottom: 20px;
+        }
+        .active::after{
+            content: "";
+            height: 2px;
+            background: #3c0d75;
+            width: 60%;
+            margin: 0 20%;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+        }
+        .active{
+            font-size: 20px;
+            color:#333 !important;
+        }
+        .czmm-list span:first-child{
+            margin-right: 30px;
+        }
+        .czmm-list span{
+            position: relative;
+            padding-bottom: 10px;
+            color: #999;
+        }
+        .emailbox{
+            display: none;
+        }
+        .check{
+            margin-top: 20px;
+            display: flex;
+            flex-direction: row;
+            text-align: center;
+            justify-content: center;
+        }
+        .check-in span{
+            color:#787a7c;
+        }
+        .check-in img{
+            width: 20px;
+            height: 20px;
+        }
+        .header-space{height:60px}
+    </style>
+</head>
+
+<body class="bgWhite">
+    <header class="header">
+        <a class="back mt5" href="javascript:history.go(-1)"></a>
+        <h4 class="ft16" data-localize="lg.register">注册</h4>
+    </header>
+    <div class="header-space"></div>
+   
+   <div class="czmm-account">
+       <img src="__MB__/images/yz.png" class="icon-img">
+       <input type="text" id="username" placeholder="请输入账号" >
+   </div>
+   <div class="czmm-code" style="display:none">
+       <img src="__MB__/images/yz.png" class="icon-img">
+       <input type="text" id="code" placeholder="请输入验证码" data-localize="lg.pcode" value="">
+       <a href="javascript:void(0)" style="color:#5890bd" id="fbtain" onclick="getPhoneCode()" data-localize="lg.send">获取验证码</a>
+   </div>
+   <div class="czmm-pwd">
+       <img src="__MB__/images/pwd.png" class="icon-img">
+       <input type="password" placeholder="请输入密码" id="setpassword"  data-localize="safe.ppwd">
+       <img src="__MB__/images/eye_no.png" data-type="0"  class="icon-img" onclick="setHS(this)">
+   </div>
+   <div class="czmm-pwd">
+       <img src="__MB__/images/pwd.png" class="icon-img">
+       <input type="password" placeholder="请再次输入密码" id="verifypassword" data-localize="safe.reppwd">
+       <img src="__MB__/images/eye_no.png" data-type="0"  class="icon-img" onclick="verify(this)">
+   </div>
+   <div class="czmm-account mb10">
+       <img src="__MB__/images/personal.png" class="icon-img">      
+       <input type="text" placeholder="请输入真实姓名" id="name" data-localize="met.pname">
+   </div>
+   
+   <!--<div class="czmm-account mb10">
+       <img src="__MB__/images/yz.png" class="icon-img">
+       <input type="text" placeholder="请输入邀请码" id="invitecode" data-localize="met.invitecode">
+   </div>-->
+   
+   <a class="forget-btns btn btn-default" data-localize="lg.register">注册</a>
+   <div class="check">
+       <div class="check-in" onclick="check(this)" data-type="0">
+           <img src="__MB__/images/check_in.png">
+           <span data-localize="contract.agree">我同意</span>
+       </div>
+       <a href="#" data-localize="contract.privacyPolicy">《用户协议及隐私政策》</a>
+   </div>
+
+    <script type="text/javascript" src="__MB__/lib/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="__MB__/lib/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__MB__/javascripts/jquery.cookie.js"></script>
+    <script type="text/javascript" src="__MB__/lib/layer_mobile/layer.js"></script>
+    <script type="text/javascript" src="__MB__/lib/jquery.localize.min.js"></script>
+    <script type="text/javascript" src="__MB__/lib/language_cookie.js?2023121001"></script>
+    <script type="text/javascript" src="__MB__/javascripts/main.js"></script>
+    <script type="text/javascript">
+        var countdown = 60;
+        var generate_code = $("#fbtain");
+        var indexs = 0;
+		var registerStatus=true;
+		function getPhoneCode(){
+		    
+		    let username = $('#username').val();
+		    initDatas({
+                url: 'home/sendPhoneCode',
+                data: {
+				    "account":username,
+				},
+                type: 'post'
+            }, function (res) {
+                layer_msg(res.msg);
+                if(res.code == 200){
+                    settime()
+                }
+                
+            });
+		}
+        function verify(that){
+            if($(that).attr('data-type')==0){
+                $(that).attr('data-type',1)
+                $(that).attr('src','__MB__/images/eye.png');
+                $("#verifypassword").attr('type','text');
+            }else{
+                $(that).attr('data-type',0)
+                $("#verifypassword").attr('type','password');
+                $(that).attr('src','__MB__/images/eye_no.png');
+            }
+        }
+        function setHS(that){
+            if($(that).attr('data-type')==0){
+                $(that).attr('data-type',1)
+                $(that).attr('src','__MB__/images/eye.png');
+                $("#setpassword").attr('type','text');
+            }else{
+                $(that).attr('data-type',0)
+                $("#setpassword").attr('type','password');
+                $(that).attr('src','__MB__/images/eye_no.png');
+            }
+        }
+        $(function () {
+            $(".czmm-list span").click(function(){
+                $(".czmm-list span").removeClass('active');
+                $(this).addClass('active');
+                if($(this).attr('data-type')=="mobile"){
+                    $(".phonebox").show();
+                    $(".emailbox").hide();
+                }else{
+                    $(".emailbox").show();
+                    $(".phonebox").hide();
+                }
+            })
+            
+            $('.selected').click(function () {
+                $('.area-code').show();
+            });
+            
+           
+				$('.forget-btns').click(function() {
+				    var emreg =
+                    /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+					var s = function () {
+
+                        var ps = /^[a-zA-Z0-9]{6,30}$/;
+                        if (!ps.test($('#setpassword').val())) {
+                            layer_msg(getlg('plength'));
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    }
+    
+                    var ss = function () {
+                        if ($('#verifypassword').val() == $('#setpassword').val()) {
+                            return true;
+                        } else {
+                            layer_msg(getlg('twonot'));
+                            return false;
+                        }
+                    }
+                    var username= $.trim($("#username").val());
+                    var code= $.trim($("#code").val());
+                    
+                    var names = $.trim($('#name').val());
+                    var pass = $.trim($('#setpassword').val());
+                    var repass = $.trim($('#verifypassword').val());
+				//	var invitecode = $.trim($("#invitecode").val());
+					
+					if(!username){
+					    layer.msg(getlg('paccount'));
+					    return;
+					}
+					
+					if (username.length < 6 || username.length > 16) {
+						layer.msg(getlg('accountlength'));
+						return;
+		            }
+					
+					
+					if(!code){
+					    layer.msg(getlg('pyan'));
+					    return;
+					}
+					if(!pass){
+					    layer.msg(getlg('pinpwd'));
+					    return;
+					}
+					
+					if (pass.length < 6 || pass.length > 16) {
+						layer.msg(getlg('plength'));
+						return;
+		            }
+					
+					if(!repass){
+					    layer.msg(getlg('pinpwd'));
+					    return;
+					}
+					
+					if(!names){
+					    layer.msg(getlg('prname'));
+					    return;
+					}
+					
+				//	if(!invitecode){
+				//	    layer.msg(getlg('inviteCode'));
+				//	    return;
+				//	}
+					
+					
+					
+				
+					if (s() == true && ss() == true && verify != '') {
+								layer_loading();
+								registerStatus = false;
+								
+								initDatas({
+					                url: 'home/ajax',
+					                data: {
+										"request":'register',
+									    "account":username,
+									    "code":code,
+										"passwd": pass,
+										"real_name":names,
+										"re_passwd": repass,
+									//	"invitecode":invitecode
+									},
+					                type: 'post'
+					            }, function (res) {
+					            	layer_close();
+					                if (res.status == 1) {
+
+					                    layer_confirm2(res.msg, { text: '确定', cannel: '取消' }, function () {
+					                    	window.location.href = res.url;
+		                                })
+
+					                } else {
+					                	if (getlg(res.msg))
+					                    	layer_msg(getlg(res.msg));
+					                	else layer_msg(res.msg);
+					                }
+					            });
+								
+								
+                    } else {
+                        //layer_msg(getlg('information'))
+                    }
+				})
+            $('.tabs p').click(function () {
+                indexs = $('.tabs p').index(this);
+                $('.tabs p').removeClass('active');
+                $(this).addClass('active');
+                if (indexs == 0) {
+                    $('.mobiles').show();
+                    $('.emails').hide();
+                } else {
+                    $('.mobiles').hide();
+                    $('.emails').show();
+                }
+
+            })
+        })
+
+
+
+        function settime() {
+            if (countdown == 0) {
+                generate_code.attr("disabled", false);
+                generate_code.html(getlg('getcode'));
+                $("#fbtain").css('color', '#5890bd');
+                countdown = 60;
+                return false;
+            } else {
+                $("#fbtain").attr("disabled", true);
+                $("#fbtain").css('color', '#b6bfc4');
+                generate_code.html(getlg('resend') + countdown);
+                countdown--;
+            }
+            setTimeout(function () {
+                settime();
+            }, 1000);
+        }
+        //
+        // function forgetpa() {
+
+        // }
+    </script>
+</body>
+
+</html>
