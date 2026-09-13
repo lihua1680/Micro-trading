@@ -27,3 +27,8 @@ Thumbs.db
 # Uploads / local data (keep structure if needed)
 /public/uploads/*
 !/public/uploads/.gitkeep
+
+# Local backups / server-only files
+/public/assets_*.bak/
+/public/static_*.bak/
+/public/.user.ini

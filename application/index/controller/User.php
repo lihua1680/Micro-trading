@@ -232,6 +232,7 @@ class User extends Common
     
     public function withdraw_account()
     {
+        $this->view->assign('bankList', get_bank_list());
         $this->view->config('view_path', '../application/index/view/'.Config::get('site.template_theme').DS);
         return $this->view->fetch('user/withdraw/withdraw_account');
     }
@@ -392,6 +393,20 @@ class User extends Common
                             $result['msg'] = '交易参数错误';
                             return json($result);
                         }
+
+                        // 玩法金额区间校验（阶段最小/最大）
+                        $rule = $timeList[$param['seconds']];
+                        $ruleMin = isset($rule['min']) ? floatval($rule['min']) : 0;
+                        $ruleMax = isset($rule['max']) ? floatval($rule['max']) : 0;
+                        $buyNumber = floatval($param['number']);
+                        if ($ruleMin > 0 && $buyNumber < $ruleMin) {
+                            $result['msg'] = '该玩法最低起购金额：'.$ruleMin;
+                            return json($result);
+                        }
+                        if ($ruleMax > 0 && $buyNumber > $ruleMax) {
+                            $result['msg'] = '该玩法最高购买金额：'.$ruleMax;
+                            return json($result);
+                        }
                         
                         $mini = $param['seconds'];
                         
@@ -412,6 +427,7 @@ class User extends Common
                         
                         $order['balance_buy_before'] = get_user_byid(getUid(), 'money');
                         $order['balance_buy_after'] = $order['balance_buy_before'] - $order['buy_money'];
+                        $order['status'] = 1;
                         $res = DB::name('order')->insertGetId($order);
                         if ($res) {
                             $mark['user_id'] = $order['user_id'];

@@ -86,6 +86,14 @@ $info = "账号：" . $user["account"]. ",姓名:" . $name . ",可用余额:" . 
         
     }
 
+    /**
+     * 常用银行名称列表（收款账户快捷选择）
+     */
+    public function bank_list()
+    {
+        return ApiSuccess('', get_bank_list());
+    }
+
 
 
     // 单个商品的走势数据
@@ -93,39 +101,93 @@ $info = "账号：" . $user["account"]. ",姓名:" . $name . ",可用余额:" . 
     {
         $param = $this->request->param();
 
-//
-//        "zh-TW": "繁體中文",
-//  "zh-CN": "简体中文",
-//  "ja": "日本語",
-//  "th": "ภาษาไทย",
-//  "vi": "Tiếng Việt",
-//  "id": "Indonesia",
-//  "ko": "한국어",
-//  "fr": "Français"
-
-
 //        1min : 1分钟
 //        5min : 5分钟
+//        15min : 15分钟
 //        30min : 30分钟
 //        1hour : 1小时
 //        1day : 1天
 //        1week : 1星期
 
         $stocks = array();
-//        $type = Config::get('site.api_type');
-//        $trade_type = Config::get('site.trade_type');
-//        $apiUrl = Config::get('site.api_url_'.$type);
-//        if ($param['resolution'] == '1D')
-//            $param['resolution'] = '1day';
-//        if ($param['resolution'] == '1W')
-//            $param['resolution'] = '1week';
-//        if ($param['resolution'] == '60min')
-//            $param['resolution'] = '1hour';
-        $key = $param['symbol'].'_stock_'.$param['resolution'];
-        $stocks = array_values(unserialize(Cache::get($key)));
-        //var_dump($key);
+        if (empty($param['symbol']) || empty($param['resolution'])) {
+            return ApiSuccess('', $stocks);
+        }
+
+        $resolution = $param['resolution'];
+        if ($resolution == '1D') {
+            $resolution = '1day';
+        }
+        if ($resolution == '1W') {
+            $resolution = '1week';
+        }
+        if ($resolution == '60min' || $resolution == '60') {
+            $resolution = '1hour';
+        }
+        if ($resolution == '15') {
+            $resolution = '15min';
+        }
+        if ($resolution == '1') {
+            $resolution = '1min';
+        }
+
+        $key = $param['symbol'].'_stock_'.$resolution;
+        $cacheData = Cache::get($key);
+        if (empty($cacheData)) {
+            return ApiSuccess('', $stocks);
+        }
+        $decoded = @unserialize($cacheData);
+        if (empty($decoded) || !is_array($decoded)) {
+            return ApiSuccess('', $stocks);
+        }
+        $stocks = array_values($decoded);
 
         return ApiSuccess('',$stocks);
+    }
+
+    // 关于我们
+    public function about()
+    {
+        $content = Config::get('site.company_desc');
+        $title = Config::get('site.web_name') ?: Config::get('site.name');
+        return ApiSuccess('', [
+            'title' => $title ?: '关于我们',
+            'content' => $content ?: '',
+        ]);
+    }
+
+    // 资讯列表
+    public function news_list()
+    {
+        $page = max(1, intval($this->request->param('page', 1)));
+        $limit = max(1, min(50, intval($this->request->param('limit', 20))));
+        $query = Db::name('article')->order('id desc');
+        $total = $query->count();
+        $list = Db::name('article')
+            ->field('id,title,summary,image,author,pubtime,cteate_time')
+            ->order('id desc')
+            ->page($page, $limit)
+            ->select();
+        return ApiSuccess('', [
+            'total' => $total,
+            'page' => $page,
+            'limit' => $limit,
+            'list' => $list ?: [],
+        ]);
+    }
+
+    // 资讯详情
+    public function news_detail()
+    {
+        $id = intval($this->request->param('id', 0));
+        if ($id <= 0) {
+            return ApiError('参数错误');
+        }
+        $article = Db::name('article')->where('id', $id)->find();
+        if (empty($article)) {
+            return ApiError('资讯不存在');
+        }
+        return ApiSuccess('', $article);
     }
 
  public function goods()
@@ -202,44 +264,48 @@ $info = "账号：" . $user["account"]. ",姓名:" . $name . ",可用余额:" . 
             $stocks = $stocks[0];
             $stock = getStockByCode($stocks['code']);
             $play_rule = json_decode($stock['play_rule'], true);
-            $wm_time_control = empty($stock['wm_time_control'])?[]:json_decode($stock['wm_time_control'], true);
-            // print_r($wm_time_control);die;
+            $wm_time_control = json_decode($stock['wm_time_control'], true);
+            if (!is_array($play_rule)) {
+                $play_rule = [];
+            }
+            if (!is_array($wm_time_control)) {
+                $wm_time_control = [];
+            }
            
             $timeList = array();
             foreach ($play_rule as $key=>$val) {
                 $time = $val['time'];
-                $days = intval($time/(3600*24));
-                $hours = intval(($time%(3600*24))/3600);
-                $minite = intval(($time%3600)/60);
-                $second = $time%60;
-                $time_str = ($days > 0 ? $days.'天':'').($hours > 0 ? $hours.'时':'').($minite > 0 ? $minite.'分钟':'').($second > 0 ? $second.'秒':'');
                 $time_str = $time.'秒';
                 if ($val['win'] > 100){
                     $profit_ratio = $val['win'] - 100;
                 }else{
                     $profit_ratio = $val['win'];
                 }
-                $timeList[] = array('seconds'=>$val['time'],'seconds_desc'=>$time_str, 'profit_ratio'=>$profit_ratio);
+                $timeList[] = array(
+                    'seconds' => (string)$val['time'],
+                    'seconds_desc' => $time_str,
+                    'profit_ratio' => (string)$profit_ratio,
+                    'min' => isset($val['min']) && $val['min'] !== '' ? (string)$val['min'] : '',
+                    'max' => isset($val['max']) && $val['max'] !== '' ? (string)$val['max'] : '',
+                );
             }
             $wmtimeList=[];
             foreach ($wm_time_control as $key1=>$val1) {
-                
-                 $time = $val1['time'];
-                $days = intval($time/(3600*24));
-                $hours = intval(($time%(3600*24))/3600);
-                $minite = intval(($time%3600)/60);
-                $second = $time%60;
-                $time_str = ($days > 0 ? $days.'天':'').($hours > 0 ? $hours.'时':'').($minite > 0 ? $minite.'分钟':'').($second > 0 ? $second.'秒':'');
+                $time = $val1['time'];
                 $time_str = $time.'秒';
                 if ($val1['win'] > 100){
                     $profit_ratio = $val1['win'] - 100;
                 }else{
                     $profit_ratio = $val1['win'];
                 }
-                $wmtimeList[] = array('seconds'=>$val1['time'],'seconds_desc'=>$time_str, 'profit_ratio'=>$profit_ratio);
+                $wmtimeList[] = array(
+                    'seconds' => (string)$val1['time'],
+                    'seconds_desc' => $time_str,
+                    'profit_ratio' => (string)$profit_ratio,
+                    'min' => isset($val1['min']) && $val1['min'] !== '' ? (string)$val1['min'] : '',
+                    'max' => isset($val1['max']) && $val1['max'] !== '' ? (string)$val1['max'] : '',
+                );
             }
-            
-            
             
             $stocks['wmtimeList'] = $wmtimeList;
             $stocks['timeList'] = $timeList;

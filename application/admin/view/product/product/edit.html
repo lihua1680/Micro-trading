@@ -51,6 +51,8 @@
                     <ins>时间(秒)</ins>
                     <ins>赢赔比例(%)</ins>
                     <ins>亏赔比例(%)</ins>
+                    <ins>最小金额</ins>
+                    <ins>最大金额</ins>
                 </dd>
                 <dd><a href="javascript:;" class="btn btn-sm btn-success btn-append"><i class="fa fa-plus"></i> {:__('Append')}</a></dd>
                 <textarea name="row[play_rule]" class="form-control hide" cols="30" rows="5">{$row.play_rule|htmlentities}</textarea>
@@ -60,6 +62,8 @@
                     <ins><input type="text" name="<%=name%>[<%=index%>][time]" class="form-control" value="<%=row.time%>" placeholder="" size="10"/></ins>
                     <ins><input type="text" name="<%=name%>[<%=index%>][win]" class="form-control" value="<%=row.win%>" placeholder=""/></ins>
                     <ins><input type="text" name="<%=name%>[<%=index%>][lose]" class="form-control" value="<%=row.lose%>" placeholder=""/></ins>
+                    <ins><input type="text" name="<%=name%>[<%=index%>][min]" class="form-control" value="<%=row.min%>" placeholder="最小金额" size="10"/></ins>
+                    <ins><input type="text" name="<%=name%>[<%=index%>][max]" class="form-control" value="<%=row.max%>" placeholder="最大金额" size="10"/></ins>
                     <!--下面的两个按钮务必保留-->
                     <span class="btn btn-sm btn-danger btn-remove"><i class="fa fa-times"></i></span>
                     <span class="btn btn-sm btn-primary btn-dragsort"><i class="fa fa-arrows"></i></span>
@@ -104,20 +108,24 @@
     <div class="form-group">
         <label class="control-label col-xs-12 col-sm-2">委买时间玩法间隔:</label>
         <div class="col-xs-12 col-sm-8">
-            <dl class="fieldlist"  data-template="basictpl"  data-name="row[wm_time_control]">
+            <dl class="fieldlist"  data-template="wmtpl"  data-name="row[wm_time_control]">
                 <dd>
                     <ins>时间(秒)</ins>
                     <ins>赢赔比例(%)</ins>
                     <ins>亏赔比例(%)</ins>
+                    <ins>最小金额</ins>
+                    <ins>最大金额</ins>
                 </dd>
                 <dd><a href="javascript:;" class="btn btn-sm btn-success btn-append"><i class="fa fa-plus"></i> {:__('Append')}</a></dd>
                 <textarea name="row[wm_time_control]" class="form-control hide" cols="30" rows="5">{$row.wm_time_control|htmlentities}</textarea>
             </dl>
-            <script id="basictpl" type="text/html">
+            <script id="wmtpl" type="text/html">
                 <dd class="form-inline">
                     <ins><input type="text" name="<%=name%>[<%=index%>][time]" class="form-control" value="<%=row.time%>" placeholder="" size="10"/></ins>
                     <ins><input type="text" name="<%=name%>[<%=index%>][win]" class="form-control" value="<%=row.win%>" placeholder=""/></ins>
                     <ins><input type="text" name="<%=name%>[<%=index%>][lose]" class="form-control" value="<%=row.lose%>" placeholder=""/></ins>
+                    <ins><input type="text" name="<%=name%>[<%=index%>][min]" class="form-control" value="<%=row.min%>" placeholder="最小金额" size="10"/></ins>
+                    <ins><input type="text" name="<%=name%>[<%=index%>][max]" class="form-control" value="<%=row.max%>" placeholder="最大金额" size="10"/></ins>
                     <!--下面的两个按钮务必保留-->
                     <span class="btn btn-sm btn-danger btn-remove"><i class="fa fa-times"></i></span>
                     <span class="btn btn-sm btn-primary btn-dragsort"><i class="fa fa-arrows"></i></span>

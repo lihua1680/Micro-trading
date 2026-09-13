@@ -42,9 +42,30 @@
     <div class="form-group">
         <label class="control-label col-xs-12 col-sm-2">银行名称:</label>
         <div class="col-xs-12 col-sm-8">
-            <input id="c-agent" class="form-control" name="row[pay_info][bank_name]" type="text" value="{$row.pay_info.bank_name|htmlentities}">
+            <select id="c-bank_name_select" class="form-control selectpicker" data-live-search="true" title="快捷选择银行">
+                <option value="">快捷选择银行</option>
+                {volist name="bankList" id="bank"}
+                <option value="{$bank}">{$bank}</option>
+                {/volist}
+            </select>
+            <input id="c-agent" class="form-control" style="margin-top:8px;" name="row[pay_info][bank_name]" type="text" value="{$row.pay_info.bank_name|htmlentities}" placeholder="可快捷选择或手动输入银行名称" list="bank_name_list">
+            <datalist id="bank_name_list">
+                {volist name="bankList" id="bank"}
+                <option value="{$bank}">
+                {/volist}
+            </datalist>
         </div>
     </div>
+    <script>
+        (function () {
+            $('#c-bank_name_select').on('changed.bs.select change', function () {
+                var val = $(this).val();
+                if (val) {
+                    $('#c-agent').val(val);
+                }
+            });
+        })();
+    </script>
     
 
     <div class="form-group layer-footer">

@@ -19,24 +19,41 @@ class Settle extends Controller
     public function run() {
         
         $lock_key = 'do_settle';
-	    $doOrder = $this->redisLock->lock($lock_key);
-	    if(!$doOrder){
-	        echo '重复do Settle'.PHP_EOL;
-	        return ;
-	    }
+        $locked = false;
+        try {
+            $doOrder = $this->redisLock->lock($lock_key);
+            if(!$doOrder){
+                echo '重复do Settle'.PHP_EOL;
+                return ;
+            }
+            $locked = true;
+        } catch (\Throwable $e) {
+            echo 'settle lock error: '.$e->getMessage().PHP_EOL;
+        }
+
 	    echo "正常执行settle".PHP_EOL;
+        try {
         $time = date('Y-m-d H:i:s');
-        $stocks = Db::name('product')->where(array('status'=>1))->column('price', 'code');
-        $stocksTime = Db::name('product')->where(array('status'=>1))->column('time_control', 'code');
+        $stocks = Db::name('product')->column('price', 'code');
+        $stocksTime = Db::name('product')->column('time_control', 'code');
         $orders = Db::name('order')->where(array('status'=>1, 'sell_time'=> array('elt', $time)))->select();
         
         foreach ($orders as $order) {
-            
-            $nowPrice = $stocks[$order['p_code']];
+            try {
+            $nowPrice = isset($stocks[$order['p_code']]) ? $stocks[$order['p_code']] : 0;
+            if (!($nowPrice > 0) && !empty($order['p_id'])) {
+                $nowPrice = Db::name('product')->where(array('id'=>$order['p_id']))->value('price');
+            }
+            if (!($nowPrice > 0) && $order['buy_price'] > 0) {
+                $nowPrice = $order['buy_price'];
+                echo 'order '.$order['id'].' fallback buy_price'.PHP_EOL;
+            }
+            if (!($nowPrice > 0)) {
+                echo 'order '.$order['id'].' skip empty price code='.$order['p_code'].PHP_EOL;
+                continue;
+            }
 
             $uorder = array('id'=>$order['id'], 'sell_price' => $nowPrice, 'status'=>3, 'user_id'=>$order['user_id']);
-
-            if ($nowPrice > 0) {
                 
                 if (($order['o_style'] == 1 && $nowPrice > $order['buy_price']) || ($order['o_style'] == 2 && $nowPrice < $order['buy_price'])) {
                     $win = true;
@@ -56,7 +73,8 @@ class Settle extends Controller
                     }
                     $win = false;
                 }
-                $timeR = $this->vaTime($stocksTime[$order['p_code']], strtotime($order["buy_time"]), $order["o_style"]);
+                $timeControl = isset($stocksTime[$order['p_code']]) ? $stocksTime[$order['p_code']] : '';
+                $timeR = $this->vaTime($timeControl, strtotime($order["buy_time"]), $order["o_style"]);
                 if ($timeR == 101) {
                     if (!$win){
                         $uorder['sell_price'] = $this->getPrice($order['buy_price'], $nowPrice, $order['o_style'], 1);
@@ -116,9 +134,20 @@ class Settle extends Controller
                 ]);
                 
                 echo $order['id'].PHP_EOL;
+            } catch (\Throwable $e) {
+                echo 'order '.$order['id'].' settle error: '.$e->getMessage().PHP_EOL;
             }
         }
-        $this->redisLock->unlock($lock_key);
+        } catch (\Throwable $e) {
+            echo 'settle error: '.$e->getMessage().PHP_EOL;
+        }
+        if ($locked) {
+            try {
+                $this->redisLock->unlock($lock_key);
+            } catch (\Throwable $e) {
+                echo 'settle unlock error: '.$e->getMessage().PHP_EOL;
+            }
+        }
 	    return ;
         
     }

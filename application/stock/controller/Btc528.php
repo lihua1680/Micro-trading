@@ -23,7 +23,7 @@ class Btc528 extends Controller
     public function runLastData() {
         $type = $this->request->param('type');
         
-        $types = array('1min', '5min', '30min', '1hour', '1day');
+        $types = array('1min', '5min', '15min', '30min', '1hour', '1day');
         
         if (!in_array($type, $types)) {
             return ;
@@ -120,12 +120,18 @@ class Btc528 extends Controller
                 $price =  $result['price'] + $randNum;
                 $price =  round($price,$numss+1);
                 $result['price'] = $price;
-                $types = array('1min', '5min', '30min', '1hour', '1day');
+                $types = array('1min', '5min', '15min', '30min', '1hour', '1day');
                 foreach($types as $type){
                     $stockKList = Cache::get($code.'_stock_'.$type);
                     $stockKList = unserialize($stockKList);
+                    if (empty($stockKList) || !is_array($stockKList)) {
+                        continue;
+                    }
                     $lastData =  array_slice($stockKList, -1, 1);
                     $lastData = $lastData[0];
+                    if (empty($lastData) || !isset($lastData['time'])) {
+                        continue;
+                    }
                     $lastData['close'] = $price;
                     if($price > $lastData['high'] ){
                         $lastData['high'] = $price;
@@ -187,20 +193,20 @@ class Btc528 extends Controller
     // 获取最新K线数据 -- 华尔街见闻数据
     public function getLastData4OTC($stockList,$type){
         
-        if (!in_array($type, array('1min', '5min', '30min', '1hour', '1day'))) {
+        if (!in_array($type, array('1min', '5min', '15min', '30min', '1hour', '1day'))) {
             return false;
         }
-        $map = array('1min'=>'1m', '5min'=>'5m', '30min'=>'30m', '1hour'=>'1h', '1day'=>'1d');
+        $map = array('1min'=>'1m', '5min'=>'5m', '15min'=>'15m', '30min'=>'30m', '1hour'=>'1h', '1day'=>'1d');
         $rows = 100;
         $interval = $map[$type];
-        if(strpos($interval,'m')){
+        if(strpos($interval,'m') !== false){
 			$interval = str_replace('m','',$interval);
 			$interval = $interval * 60;
 			$rows = 100;
-		}else if(strpos($interval,'d')){
+		}else if(strpos($interval,'d') !== false){
 			$interval = str_replace('d','',$interval);
 			$interval = $interval * 60 * 24 * 60;
-		}else if(strpos($interval,'h')){
+		}else if(strpos($interval,'h') !== false){
 			$interval = str_replace('h','',$interval);
 			$interval = $interval * 60 * 60;
 		}
@@ -210,8 +216,6 @@ class Btc528 extends Controller
 			$url .= "&fields=tick_at,open_px,close_px,high_px,low_px,turnover_volume,turnover_value,average_px,px_change,px_change_rate,avg_px,ma2";
 			
 			$response = http_request($url);
-		var_dump($response);
-		
 			$res = json_decode($response,true);
 			
 			if($res['code'] == 20000){
@@ -261,12 +265,12 @@ class Btc528 extends Controller
      */
     public function getLastData($type,$code) {
 
-        if (!in_array($type, array('1min', '5min', '30min', '1hour', '1day'))) {
+        if (!in_array($type, array('1min', '5min', '15min', '30min', '1hour', '1day'))) {
             return false;
         }
-        $typeMap = array('1min'=>'1m', '5min'=>'5m', '30min'=>'30m', '1hour'=>'1h', '1day'=>'1d');
+        $typeMap = array('1min'=>'1m', '5min'=>'5m', '15min'=>'15m', '30min'=>'30m', '1hour'=>'1h', '1day'=>'1d');
 
-        $mapLimit = array('1min'=>120, '5min'=>300, '30min'=>1800, '1hour'=>3600, '1day'=>86400);
+        $mapLimit = array('1min'=>120, '5min'=>300, '15min'=>900, '30min'=>1800, '1hour'=>3600, '1day'=>86400);
         
         $limit = 120;
         $startTime = time();
@@ -345,7 +349,7 @@ class Btc528 extends Controller
 
         $result = array();
         
-        if (!data)
+        if (!$data || !is_array($data))
             return false;
         foreach ($data as $key=>$val) {
             $time = $val['T'];
@@ -409,12 +413,18 @@ class Btc528 extends Controller
         $price = round($price,$numss+1);
         $code = $data['code'];
          // 对比k线 最新数据 和波动价格匹配
-        $types = array('1min', '5min', '30min', '1hour', '1day');
+        $types = array('1min', '5min', '15min', '30min', '1hour', '1day');
         foreach($types as $type){
             $stockKList = Cache::get($code.'_stock_'.$type);
             $stockKList = unserialize($stockKList);
+            if (empty($stockKList) || !is_array($stockKList)) {
+                continue;
+            }
             $lastData =  array_slice($stockKList, -1, 1);
             $lastData = $lastData[0];
+            if (empty($lastData) || !isset($lastData['time'])) {
+                continue;
+            }
             $lastData['close'] = $price;
             if($price > $lastData['high'] ){
                 $lastData['high'] = $price;

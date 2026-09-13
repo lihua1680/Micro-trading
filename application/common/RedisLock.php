@@ -8,7 +8,7 @@ class RedisLock
     public function __construct()
     {
         $this->redis = new \Redis();
-        $this->redis->connect(config('cache.host'), 6379);
+        $this->redis->connect(config('cache.host'), 6379, 2);
         if(!empty(config('cache.password'))){
             $this->redis->auth(config('cache.password'));
         }

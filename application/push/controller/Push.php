@@ -36,11 +36,14 @@ class Push
                 $socket->join('kline_'.$msg);
                 
                 Timer::add(1, function ($msg)use ($io){
-                    $lines = array('1min'=>'1min', '5min'=>'5min', '30min'=>'30min', '60min'=>'1hour', '1D'=>'1day');
+                    $lines = array('1min'=>'1min', '5min'=>'5min', '15min'=>'15min', '30min'=>'30min', '60min'=>'1hour', '1D'=>'1day');
                     
                     foreach ($lines as $key=>$val) {
                         $stock = unserialize(Cache::get($msg.'_stock_new_'.$val));
                         $price = unserialize(Cache::get($msg.'_stock'));
+                        if (empty($stock) || empty($price)) {
+                            continue;
+                        }
                         $stock['close'] = $price['price'];
                         $stock['code'] = $price['code'];
                         $stock['type'] = $key;

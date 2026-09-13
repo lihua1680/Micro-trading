@@ -14,6 +14,8 @@ return [
     'zhanghaobeidunjie' => '账户被冻结！',
     'shichangxiuxhi {:trade_timeStr} shijianduanneijiaoyi' => '市场已休市，请于{:trade_timeStr}时间段内进行交易!！',
     'zuixiaogoumai {:bet_min} zuidagoumai {:bet_max}' => '最小购买金额:{:bet_min} 最大购买金额:{:bet_max}',
+    'wanfazuidiqi {:min}' => '该玩法最低起购金额：{:min}',
+    'wanfazuigao {:max}' => '该玩法最高购买金额：{:max}',
     'jiaoyipinglbucunzai' => '交易品种不存在！',
     'jiaoyicanshusuowu' => '交易参数错误！',
     'yuebuzu' => '账号余额不足！',

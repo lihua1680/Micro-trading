@@ -1,8 +1,8 @@
 <?php
 
 return array (
-  'name' => '中国黄金',
-  'kefu_script' => 'https://chatlink.mstatik.com/widget/standalone.html?eid=6577e86af3d4432fb2d5d7c6b1f891e1',
+  'name' => '东兴证券',
+  'kefu_script' => 'https://chat.dongxingzj.cc/',
   'categorytype' => 
   array (
     'banner' => '轮播图',
@@ -22,9 +22,9 @@ return array (
     2 => '黄金会员',
     3 => '白金会员',
   ),
-  'tx_min_tixian' => '100',
-  'tx_max_tixian' => '99999999',
-  'tx_max_times' => '2',
+  'tx_min_tixian' => '1000',
+  'tx_max_tixian' => '999999999',
+  'tx_max_times' => '1',
   'cashout_start_time' => '10',
   'cashout_end_time' => '22',
   'tx_text_tixian' => '请正确填写提现信息',
@@ -32,9 +32,9 @@ return array (
   'tx_text_no_time' => '尊敬的用户您好，请在提现时间段提现。提现时间为10:00至22:00',
   'chat_setting' => 
   array (
-    0 => '',
+    0 => 'alert_notice',
   ),
-  'web_name' => '中国黄金集团公司',
+  'web_name' => '东兴证券股份有限公司',
   'min_chongzhi' => '100',
   'max_chongzhi' => '1000000',
   'web_bank_name' => '中国银行',
@@ -44,7 +44,9 @@ return array (
   'web_bank_tips' => '尊敬的用户您好：由于自助充值通道正在维护升级更新当中，如需充值请联系在线客服，谢谢，给您带来不便，敬请谅解！',
   'bank_status' => '1',
   'user_icon' => '/uploads/20241121/2346402d9e403647f8c1edf6a6838acb.png',
-  'alert_notice' => '',
+  'alert_notice' => '<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>',
   'save_bank_info' => '1',
   'need_bind_account' => '1',
   'limit_script' => 'https://www.baidu.com/',
@@ -53,14 +55,14 @@ return array (
   'version' => '1.0.65',
   'template_theme' => 'default',
   'mpsswd_show' => '1',
-  'freshtime' => '1752496952',
+  'freshtime' => '1788502323',
   'trade_type' => 'usdt',
   'bet_max' => '1000000000',
-  'bet_min' => '100',
+  'bet_min' => '1000',
   'api_stock_key' => '',
   'api_stock_code' => '',
   'play_type' => '2',
-  'tx_fee_rate' => '0.005',
+  'tx_fee_rate' => '0.01',
   'usdt_status' => '1',
   'usdt_address' => 
   array (
@@ -71,9 +73,14 @@ return array (
   'order_fresh' => '1',
   'cny_open' => '1',
   'usdt_open' => '1',
-  'company_desc' => '',
-  'kefu_url' => 'https://chatlink.mstatik.com/widget/standalone.html?eid=6577e86af3d4432fb2d5d7c6b1f891e1',
+  'company_desc' => '<p>东兴证券股份有限公司（简称东兴证券或公司，股票代码601198.SH）是2008年经财政部和中国证监会批准，由中国东方资产管理股份有限公司（以下简称中国东方）作为主要发起人发起设立的全国性综合类证券公司，2015年2月26日在上海证券交易所上市，是境内首家资产管理公司系上市证券公司。</p>
+<p>公司注册资本32.32亿元，总部设在北京，截至2024年6月末在全国各地设有94家分公司和证券营业部，拥有东兴期货有限责任公司、东兴证券投资有限公司、东兴资本投资管理有限公司、东兴证券（香港）金融控股有限公司、东兴基金管理有限公司5家一级全资子公司。公司业务涵盖财富管理业务、投资交易业务、投资银行业务、资产管理业务、期货业务和其他业务等，形成了顺逆周期双轮驱动、境内境外协同联动的综合金融服务体系。</p>
+<p>公司以客户为中心，深入推进业务的开拓创新，精心打造信念坚定、德才兼备、忠诚敬业、勇于担当、开拓创新的专业化人才队伍，以综合化、专业化、定制化的服务和稳健的经营风格赢得客户信任；兼顾经营效益增长和高质量发展，积极构建具有鲜明时代特色和符合自身特点的企业文化体系，建立科学、严谨、高效的业务流程和全面风险管理体系，秉承&ldquo;诚信专业服务、合规稳健经营、守正创新发展、高效协作共赢&rdquo;的核心价值观，以&ldquo;践行担当、服务实体、创造价值、实现自我、共创未来&rdquo;为使命，努力打造品牌领先、特色鲜明、深受信赖的新时代金融服务企业。</p>
+<p>公司控股股东中国东方是经国务院批准，由财政部、全国社会保障基金理事会共同发起设立的中央金融企业。</p>
+<p>截至2024年末，中国东方在全国共设26家分公司，下辖中华联合保险集团股份有限公司、大连银行股份有限公司、东兴证券、中国东方资产管理（国际）控股有限公司、上海东兴投资控股发展有限公司、东方富兴（北京）资产管理有限公司、东方金诚国际信用评估有限公司、大业信托有限责任公司等8家一类子公司 ，业务涵盖不良资产经营、保险、银行、证券、基金、信托、信用评级和海外业务等，员工总数5万多人。</p>
+<p>公司作为中国东方旗下唯一的上市金融平台，在中国东方内部具有重要的战略地位。公司延续并发扬东方基因，紧密围绕集团不良资产主业，发挥自身资源禀赋，深化集团协同，创新协同摸式，不断强化公司在不良资产及特殊机会投资等领域的差异化竞争力，推动公司与集团融合式高质量发展。</p>',
+  'kefu_url' => 'https://chat.dongxingzj.cc/',
   'trade_time' => '00:00-24:00',
   'order_voice' => '1',
-  'withdraw_voice' => '1',
+  'withdraw_voice' => '0',
 );

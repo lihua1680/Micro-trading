@@ -346,6 +346,7 @@ class Downmark extends Backend
         $row['pay_info'] = json_decode($row['pay_info'], true);
         
         $this->view->assign("row", $row);
+        $this->view->assign("bankList", get_bank_list());
         
         return $this->view->fetch();
     }
@@ -460,6 +461,7 @@ class Downmark extends Backend
         }
         $row['pay_info'] = json_decode($row['pay_info'], true);
         $this->view->assign("row", $row);
+        $this->view->assign("bankList", get_bank_list());
         return $this->view->fetch();
     }
     

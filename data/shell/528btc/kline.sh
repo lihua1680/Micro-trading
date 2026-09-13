@@ -1,9 +1,10 @@
 #!/bin/bash
 declare -a types
 types[0]=5min
-types[1]=30min
-types[2]=1hour
-types[3]=1day
+types[1]=15min
+types[2]=30min
+types[3]=1hour
+types[4]=1day
 
 for type in ${types[*]}
 do

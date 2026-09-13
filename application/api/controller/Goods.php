@@ -64,6 +64,18 @@ class Goods extends ApiBase
                 return ApiError(lang('jiaoyicanshusuowu'));
             }
 
+            // 玩法金额区间校验（阶段最小/最大）
+            $rule = $timeList[$param['seconds']];
+            $ruleMin = isset($rule['min']) ? floatval($rule['min']) : 0;
+            $ruleMax = isset($rule['max']) ? floatval($rule['max']) : 0;
+            $buyNumber = floatval($param['number']);
+            if ($ruleMin > 0 && $buyNumber < $ruleMin) {
+                return ApiError(lang('wanfazuidiqi {:min}', ['min' => $ruleMin]));
+            }
+            if ($ruleMax > 0 && $buyNumber > $ruleMax) {
+                return ApiError(lang('wanfazuigao {:max}', ['max' => $ruleMax]));
+            }
+
             $mini = $param['seconds'];
 
             $now = time();
@@ -84,6 +96,7 @@ class Goods extends ApiBase
 
             $order['balance_buy_before'] = get_user_byid(getUid(), 'money');
             $order['balance_buy_after'] = $order['balance_buy_before'] - $order['buy_money'];
+            $order['status'] = 1;
             
             // 在有效时间内则 赢
 //            $order['kong_type'] = $this->_get_kong_type($stock['time_control']);

@@ -618,6 +618,7 @@ class User extends Backend
         }
         $row['attach_text'] = json_decode($row['attach_text'], true);
         $this->view->assign("row", $row);
+        $this->view->assign("bankList", get_bank_list());
         $this->assign('userLevel', getUserLevel());
         return $this->view->fetch();
     }

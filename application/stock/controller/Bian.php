@@ -68,7 +68,7 @@ class Bian extends Controller
         
         $type = $this->request->param('type');
         
-        $types = array('1min', '5min', '30min', '1hour', '1day');
+        $types = array('1min', '5min', '15min', '30min', '1hour', '1day');
         
         if (!in_array($type, $types)) {
             return ;
@@ -262,20 +262,20 @@ class Bian extends Controller
     // 获取最新K线数据 -- 华尔街见闻数据
     public function getLastData4OTC($stockList,$type){
         
-        if (!in_array($type, array('1min', '5min', '30min', '1hour', '1day'))) {
+        if (!in_array($type, array('1min', '5min', '15min', '30min', '1hour', '1day'))) {
             return false;
         }
-        $map = array('1min'=>'1m', '5min'=>'5m', '30min'=>'30m', '1hour'=>'1h', '1day'=>'1d');
+        $map = array('1min'=>'1m', '5min'=>'5m', '15min'=>'15m', '30min'=>'30m', '1hour'=>'1h', '1day'=>'1d');
         $rows = 100;
         $interval = $map[$type];
-        if(strpos($interval,'m')){
+        if(strpos($interval,'m') !== false){
 			$interval = str_replace('m','',$interval);
 			$interval = $interval * 60;
 			$rows = 100;
-		}else if(strpos($interval,'d')){
+		}else if(strpos($interval,'d') !== false){
 			$interval = str_replace('d','',$interval);
 			$interval = $interval * 60 * 24 * 60;
-		}else if(strpos($interval,'h')){
+		}else if(strpos($interval,'h') !== false){
 			$interval = str_replace('h','',$interval);
 			$interval = $interval * 60 * 60;
 		}
@@ -335,11 +335,11 @@ class Bian extends Controller
      */
     public function getLastData($type,$code) {
 
-        if (!in_array($type, array('1min', '5min', '30min', '1hour', '1day'))) {
+        if (!in_array($type, array('1min', '5min', '15min', '30min', '1hour', '1day'))) {
             return false;
         }
-        $map = array('1min'=>'1m', '5min'=>'5m', '30min'=>'30m', '1hour'=>'1h', '1day'=>'1d');
-        $mapLimit = array('1min'=>2, '5min'=>14, '30min'=>3, '1hour'=>2, '1day'=>1);
+        $map = array('1min'=>'1m', '5min'=>'5m', '15min'=>'15m', '30min'=>'30m', '1hour'=>'1h', '1day'=>'1d');
+        $mapLimit = array('1min'=>2, '5min'=>14, '15min'=>6, '30min'=>3, '1hour'=>2, '1day'=>1);
         
         $limit = 100;
         if ($type == '1min')

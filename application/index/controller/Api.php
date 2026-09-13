@@ -82,7 +82,13 @@ class Api extends Common
                              
                              
                              $time_str = $time.'秒';
-                             $timeList[] = array('seconds'=>$val['time'],'seconds_desc'=>$time_str, 'profit_ratio'=>$val['win']);
+                             $timeList[] = array(
+                                 'seconds'=>$val['time'],
+                                 'seconds_desc'=>$time_str,
+                                 'profit_ratio'=>$val['win'],
+                                 'min'=>isset($val['min']) ? $val['min'] : '',
+                                 'max'=>isset($val['max']) ? $val['max'] : '',
+                             );
                          }
                          $result['data']['timeList'] = $timeList;
                          $result['data']['price'] = $stock['price'];
@@ -103,8 +109,19 @@ class Api extends Common
                          $param['resolution'] = '1week';
                      if ($param['resolution'] == '60min')
                          $param['resolution'] = '1hour';
+                     if ($param['resolution'] == '15')
+                         $param['resolution'] = '15min';
+                     if ($param['resolution'] == '1')
+                         $param['resolution'] = '1min';
                      $key = $param['symbol'].'_stock_'.$param['resolution'];
-                     $stocks = array_values(unserialize(Cache::get($key)));
+                     $cacheData = Cache::get($key);
+                     $stocks = array();
+                     if (!empty($cacheData)) {
+                         $decoded = @unserialize($cacheData);
+                         if (!empty($decoded) && is_array($decoded)) {
+                             $stocks = array_values($decoded);
+                         }
+                     }
                      //var_dump($key);
                      $result['data'] = $stocks;
                      break;
